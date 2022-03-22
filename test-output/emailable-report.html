@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "https://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>TestNG Report</title>
+<style type="text/css">table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}th,td {border:1px solid #009;padding:.25em .5em}th {vertical-align:bottom}td {vertical-align:top}table a {font-weight:bold}.stripe td {background-color: #E6EBF9}.num {text-align:right}.passedodd td {background-color: #3F3}.passedeven td {background-color: #0A0}.skippedodd td {background-color: #DDD}.skippedeven td {background-color: #CCC}.failedodd td,.attn {background-color: #F33}.failedeven td,.stripe .attn {background-color: #D00}.stacktrace {white-space:pre;font-family:monospace}.totop {font-size:85%;text-align:center;border-bottom:2px solid #000}.invisible {display:none}</style>
+</head>
+<body>
+<table>
+<tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
+<tr><th colspan="8">zadanie2 by packages</th></tr>
+<tr><td><a href="#t0">test</a></td><td class="num">24</td><td class="num">0</td><td class="num">0</td><td class="num attn">2</td><td class="num">2 480</td><td></td><td></td></tr>
+</table>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">zadanie2 by packages</th></tr></tbody><tbody id="t0"><tr><th colspan="4">test &#8212; failed</th></tr><tr class="failedeven"><td rowspan="2">test.ExchangerTest</td><td><a href="#m0">shouldReturnLastRateData_firstDataConnectionContainsRate</a></td><td rowspan="1">1647960559733</td><td rowspan="1">675</td></tr><tr class="failedeven"><td><a href="#m1">shouldReturnLastRateData_nextDataConnectionContainsRate</a></td><td rowspan="1">1647960560410</td><td rowspan="1">578</td></tr><tr><th colspan="4">test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="2">test.ApiConnectionTest</td><td><a href="#m2">shouldCorrectRateFromDate_whenFindingApiRateData</a></td><td rowspan="1">1647960558739</td><td rowspan="1">280</td></tr><tr class="passedeven"><td><a href="#m3">shouldReturnNull_whenFindingOlderRateData</a></td><td rowspan="1">1647960559021</td><td rowspan="1">81</td></tr><tr class="passedodd"><td rowspan="4">test.CachedConnectionTest</td><td><a href="#m4">shouldFindExpectedRateDate_whenFindingRateData</a></td><td rowspan="1">1647960559108</td><td rowspan="1">9</td></tr><tr class="passedodd"><td><a href="#m5">shouldReturnDiffrentRateDate_whenFindingRequestWithNewCurrency</a></td><td rowspan="1">1647960559118</td><td rowspan="1">1</td></tr><tr class="passedodd"><td><a href="#m6">shouldReturnNull_whenFindingRequestWithNewDate</a></td><td rowspan="1">1647960559120</td><td rowspan="1">0</td></tr><tr class="passedodd"><td><a href="#m7">shouldSavedRateData_whenFindingSavedRateData</a></td><td rowspan="1">1647960559121</td><td rowspan="1">1</td></tr><tr class="passedeven"><td rowspan="2">test.CurrencyCalculatorTest</td><td><a href="#m8">shouldReturnCorrectValue_whenInputCorrectOnCalculateTFromPln</a></td><td rowspan="1">1647960559122</td><td rowspan="1">1</td></tr><tr class="passedeven"><td><a href="#m9">shouldReturnCorrectValue_whenInputCorrectOnCalculateToPln</a></td><td rowspan="1">1647960559124</td><td rowspan="1">4</td></tr><tr class="passedodd"><td rowspan="10">test.ExchangerTest</td><td><a href="#m10">shouldRetrunNull_whenNoDataConnectionContainsRate</a></td><td rowspan="1">1647960559132</td><td rowspan="1">455</td></tr><tr class="passedodd"><td><a href="#m11">shouldReturnExpectedValue_whenInputIsCorrectOnExchangeFromPln</a></td><td rowspan="1">1647960559588</td><td rowspan="1">56</td></tr><tr class="passedodd"><td><a href="#m12">shouldReturnExpectedValue_whenInputIsCorrectOnExchangeToPln</a></td><td rowspan="1">1647960559646</td><td rowspan="1">85</td></tr><tr class="passedodd"><td><a href="#m13">shouldReturnRateData_firstDataConnectionContainsRate</a></td><td rowspan="1">1647960560990</td><td rowspan="1">101</td></tr><tr class="passedodd"><td><a href="#m14">shouldReturnRateData_nextDataConnectionContainsRate</a></td><td rowspan="1">1647960561093</td><td rowspan="1">77</td></tr><tr class="passedodd"><td><a href="#m15">shouldThrowExchangerException_whenRequestAfterTodayLocalDate</a></td><td rowspan="1">1647960561171</td><td rowspan="1">4</td></tr><tr class="passedodd"><td><a href="#m16">shouldThrowExchangerException_whenRequestBeforFirstLocalDate</a></td><td rowspan="1">1647960561176</td><td rowspan="1">2</td></tr><tr class="passedodd"><td><a href="#m17">shouldThrowExchangerException_whenRequestNegativeValue</a></td><td rowspan="1">1647960561179</td><td rowspan="1">0</td></tr><tr class="passedodd"><td><a href="#m18">shouldThrowExchangerException_whenRequestNullValue</a></td><td rowspan="1">1647960561180</td><td rowspan="1">1</td></tr><tr class="passedodd"><td><a href="#m19">shouldThrowExchangerException_whennRequestNullCurrency</a></td><td rowspan="1">1647960561181</td><td rowspan="1">1</td></tr><tr class="passedeven"><td rowspan="2">test.FileConnectionTest</td><td><a href="#m20">shouldReturnRateData_whenFindingApiRateData</a></td><td rowspan="1">1647960561182</td><td rowspan="1">2</td></tr><tr class="passedeven"><td><a href="#m21">shouldReturnTheSameRateData_whenFindingOlderRateData</a></td><td rowspan="1">1647960561185</td><td rowspan="1">2</td></tr><tr class="passedodd"><td rowspan="3">test.InputValidatorTest</td><td><a href="#m22">shouldThrowDateBeforeFirstException_whenDateBeforeFirst</a></td><td rowspan="1">1647960561188</td><td rowspan="1">1</td></tr><tr class="passedodd"><td><a href="#m23">shouldThrowNegativeValueException_whenValueNegative</a></td><td rowspan="1">1647960561189</td><td rowspan="1">1</td></tr><tr class="passedodd"><td><a href="#m24">shouldThrowsDateAfterTodayException_whenDateAfterToday</a></td><td rowspan="1">1647960561190</td><td rowspan="1">1</td></tr><tr class="passedeven"><td rowspan="1">test.UrlCreatorTest</td><td><a href="#m25">shouldReturnCorrectURL_whenCorrectUrlreturned</a></td><td rowspan="1">1647960561191</td><td rowspan="1">0</td></tr></tbody>
+</table>
+<h2>test</h2><h3 id="m0">test.ExchangerTest#shouldReturnLastRateData_firstDataConnectionContainsRate</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.AssertionError: expected [[date=2002-01-04, rate=3.5346, currency=EUR]] but found [null]
+	at org.testng.Assert.fail(Assert.java:99)
+	at org.testng.Assert.failNotEquals(Assert.java:1037)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:140)
+	at org.testng.Assert.assertEquals(Assert.java:122)
+	at org.testng.Assert.assertEquals(Assert.java:617)
+	at test.ExchangerTest.shouldReturnLastRateData_firstDataConnectionContainsRate(ExchangerTest.java:98)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
+	at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:598)
+	at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:173)
+	at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:824)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:146)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.testng.TestRunner.privateRun(TestRunner.java:794)
+	at org.testng.TestRunner.run(TestRunner.java:596)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:377)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:371)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:332)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:276)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1212)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1134)
+	at org.testng.TestNG.runSuites(TestNG.java:1063)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">test.ExchangerTest#shouldReturnLastRateData_nextDataConnectionContainsRate</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.AssertionError: expected [[date=2002-01-04, rate=3.5346, currency=EUR]] but found [null]
+	at org.testng.Assert.fail(Assert.java:99)
+	at org.testng.Assert.failNotEquals(Assert.java:1037)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:140)
+	at org.testng.Assert.assertEquals(Assert.java:122)
+	at org.testng.Assert.assertEquals(Assert.java:617)
+	at test.ExchangerTest.shouldReturnLastRateData_nextDataConnectionContainsRate(ExchangerTest.java:118)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
+	at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:598)
+	at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:173)
+	at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:824)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:146)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.testng.TestRunner.privateRun(TestRunner.java:794)
+	at org.testng.TestRunner.run(TestRunner.java:596)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:377)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:371)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:332)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:276)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1212)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1134)
+	at org.testng.TestNG.runSuites(TestNG.java:1063)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m2">test.ApiConnectionTest#shouldCorrectRateFromDate_whenFindingApiRateData</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m3">test.ApiConnectionTest#shouldReturnNull_whenFindingOlderRateData</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m4">test.CachedConnectionTest#shouldFindExpectedRateDate_whenFindingRateData</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m5">test.CachedConnectionTest#shouldReturnDiffrentRateDate_whenFindingRequestWithNewCurrency</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m6">test.CachedConnectionTest#shouldReturnNull_whenFindingRequestWithNewDate</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m7">test.CachedConnectionTest#shouldSavedRateData_whenFindingSavedRateData</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m8">test.CurrencyCalculatorTest#shouldReturnCorrectValue_whenInputCorrectOnCalculateTFromPln</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m9">test.CurrencyCalculatorTest#shouldReturnCorrectValue_whenInputCorrectOnCalculateToPln</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m10">test.ExchangerTest#shouldRetrunNull_whenNoDataConnectionContainsRate</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m11">test.ExchangerTest#shouldReturnExpectedValue_whenInputIsCorrectOnExchangeFromPln</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m12">test.ExchangerTest#shouldReturnExpectedValue_whenInputIsCorrectOnExchangeToPln</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m13">test.ExchangerTest#shouldReturnRateData_firstDataConnectionContainsRate</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m14">test.ExchangerTest#shouldReturnRateData_nextDataConnectionContainsRate</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m15">test.ExchangerTest#shouldThrowExchangerException_whenRequestAfterTodayLocalDate</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m16">test.ExchangerTest#shouldThrowExchangerException_whenRequestBeforFirstLocalDate</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m17">test.ExchangerTest#shouldThrowExchangerException_whenRequestNegativeValue</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m18">test.ExchangerTest#shouldThrowExchangerException_whenRequestNullValue</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m19">test.ExchangerTest#shouldThrowExchangerException_whennRequestNullCurrency</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m20">test.FileConnectionTest#shouldReturnRateData_whenFindingApiRateData</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m21">test.FileConnectionTest#shouldReturnTheSameRateData_whenFindingOlderRateData</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m22">test.InputValidatorTest#shouldThrowDateBeforeFirstException_whenDateBeforeFirst</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m23">test.InputValidatorTest#shouldThrowNegativeValueException_whenValueNegative</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m24">test.InputValidatorTest#shouldThrowsDateAfterTodayException_whenDateAfterToday</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m25">test.UrlCreatorTest#shouldReturnCorrectURL_whenCorrectUrlreturned</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+</body>
+</html>
