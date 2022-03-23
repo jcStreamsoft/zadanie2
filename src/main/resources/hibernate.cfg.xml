@@ -22,6 +22,8 @@
   
         <!-- Annotated entity classes -->
 	   <mapping class="zadanie2.model.hibernate.Country" />
+		<mapping class="zadanie2.model.hibernate.Rate" />
+		<mapping class="zadanie2.model.hibernate.Currency" />
 
     </session-factory>
 </hibernate-configuration>

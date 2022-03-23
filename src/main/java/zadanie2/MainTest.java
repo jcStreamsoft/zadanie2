@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import zadanie2.model.hibernate.Country;
+import zadanie2.model.hibernate.Rate;
 
 public class MainTest {
 
@@ -19,9 +19,9 @@ public class MainTest {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		List<Country> result = session.createQuery("from Country", Country.class).getResultList();
-		for (Country c : result) {
-			System.out.println(c.getName());
+		List<Rate> result = session.createQuery("from Rate", Rate.class).getResultList();
+		for (Rate c : result) {
+			System.out.println(c.toString());
 		}
 		session.getTransaction().commit();
 		session.close();
