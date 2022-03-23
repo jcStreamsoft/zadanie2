@@ -7,20 +7,21 @@
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">password</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/hibernatedb</property>
+        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/CurrencyRateDataBase</property>
 
 
-
-        <property name="connection_pool_size">1</property>
-
-        <property name="hbm2ddl.auto">create</property>
-
+		<!-- SQL dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+  
+        <!-- Print executed SQL to stdout -->
         <property name="show_sql">true</property>
-
-
-
-       <mapping class="org.javabrains.sanjaya.dto.UserDetails"/>
+  
+        <!-- Update database on startup -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+  
+        <!-- Annotated entity classes -->
+	   <mapping class="zadanie2.model.hibernate.Country" />
 
     </session-factory>
 </hibernate-configuration>
