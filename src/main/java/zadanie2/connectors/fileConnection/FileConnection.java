@@ -88,16 +88,6 @@ public class FileConnection implements DataConnection {
 		return null;
 	}
 
-	public void printCurrencies() throws ParsingException, IOException {
-		List<RatesTable> rates = parser.getRateFromString(fileReader.getStringFromFile());
-
-		RatesTable rateTable = rates.get(0);
-		List<Rate> rateList = rateTable.getRates();
-		for (Rate r : rateList) {
-			System.out.println(r.getCode().toUpperCase() + "(\"" + r.getCode().toLowerCase() + "\"),");
-		}
-	}
-
 	private boolean dateEquals(RatesTable rateTable, LocalDate date) {
 		return rateTable.getEffectiveDate().isEqual(date);
 	}

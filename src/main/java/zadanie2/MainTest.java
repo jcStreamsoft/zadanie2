@@ -1,21 +1,17 @@
 package zadanie2;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
-import zadanie2.connectors.fileConnection.FileConnection;
 import zadanie2.connectors.sqlConnection.HibernateFactory;
-import zadanie2.exceptions.parserExceptions.ParsingException;
-import zadanie2.parsers.fileParsers.FileJsonParser;
 
 public class MainTest {
 
 	public static void main(String[] args) throws Exception {
-		printAllCurrencies();
+		test1();
 	}
 
 	public static void test1() throws Exception {
@@ -28,8 +24,4 @@ public class MainTest {
 		System.out.println(list);
 	}
 
-	public static void printAllCurrencies() throws ParsingException, IOException {
-		FileConnection fileConnection = new FileConnection(new FileJsonParser(), "dane/fileOldArrayJson.txt");
-		fileConnection.printCurrencies();
-	}
 }
