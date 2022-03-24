@@ -1,4 +1,4 @@
-package zadanie2.connectors;
+package zadanie2.connectors.apiConnection;
 
 import java.net.MalformedURLException;
 import java.net.URL;

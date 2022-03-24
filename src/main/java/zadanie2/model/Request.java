@@ -3,13 +3,13 @@ package zadanie2.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import zadanie2.enums.Currency;
+import zadanie2.enums.CurrencyCode;
 
 public class Request {
 
 	private LocalDate date;
 	private BigDecimal value;
-	private Currency currency;
+	private CurrencyCode currencyCode;
 	private String dataFormat;
 
 	private Request() {
@@ -23,8 +23,8 @@ public class Request {
 		return value;
 	}
 
-	public Currency getCurrency() {
-		return currency;
+	public CurrencyCode getCurrency() {
+		return currencyCode;
 	}
 
 	public String getDataFormat() {
@@ -36,21 +36,21 @@ public class Request {
 	}
 
 	public String getCurrencyCode() {
-		return this.currency.getCode();
+		return this.currencyCode.getCode();
 	}
 
-	public static Builder getBuilder(BigDecimal value, Currency currency) {
-		return new Builder(value, currency);
+	public static Builder getBuilder(BigDecimal value, CurrencyCode currencyCode) {
+		return new Builder(value, currencyCode);
 	}
 
 	public static class Builder {
 		private LocalDate date;
 		private BigDecimal value;
-		private Currency currency;
+		private CurrencyCode currencyCode;
 
-		public Builder(BigDecimal value, Currency currency) {
+		public Builder(BigDecimal value, CurrencyCode currencyCode) {
 			this.value = value;
-			this.currency = currency;
+			this.currencyCode = currencyCode;
 		}
 
 		public Builder date(LocalDate date) {
@@ -61,7 +61,7 @@ public class Request {
 		public Request build() {
 			Request request = new Request();
 			request.value = this.value;
-			request.currency = this.currency;
+			request.currencyCode = this.currencyCode;
 			if (date == null) {
 				request.date = LocalDate.now();
 			} else {

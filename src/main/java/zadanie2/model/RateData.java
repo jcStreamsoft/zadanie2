@@ -4,18 +4,18 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import zadanie2.enums.Currency;
+import zadanie2.enums.CurrencyCode;
 
 public class RateData {
 	private LocalDate date;
 	private BigDecimal rate;
-	private Currency currency;
+	private CurrencyCode currencyCode;
 
-	public RateData(LocalDate date, BigDecimal rate, Currency currency) {
+	public RateData(LocalDate date, BigDecimal rate, CurrencyCode currencyCode) {
 		super();
 		this.date = date;
 		this.rate = rate;
-		this.currency = currency;
+		this.currencyCode = currencyCode;
 	}
 
 	public LocalDate getDate() {
@@ -26,18 +26,18 @@ public class RateData {
 		return rate;
 	}
 
-	public Currency getCurrency() {
-		return currency;
+	public CurrencyCode getCurrencyCode() {
+		return currencyCode;
 	}
 
 	@Override
 	public String toString() {
-		return "[date=" + date + ", rate=" + rate + ", currency=" + currency + "]";
+		return "[date=" + date + ", rate=" + rate + ", currency=" + currencyCode + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(currency, date, rate);
+		return Objects.hash(currencyCode, date, rate);
 	}
 
 	@Override
@@ -49,6 +49,7 @@ public class RateData {
 		if (getClass() != obj.getClass())
 			return false;
 		RateData other = (RateData) obj;
-		return currency == other.currency && Objects.equals(date, other.date) && Objects.equals(rate, other.rate);
+		return currencyCode == other.currencyCode && Objects.equals(date, other.date)
+				&& Objects.equals(rate, other.rate);
 	}
 }

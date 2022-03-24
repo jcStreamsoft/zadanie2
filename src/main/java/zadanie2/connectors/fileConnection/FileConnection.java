@@ -1,4 +1,4 @@
-package zadanie2.connectors;
+package zadanie2.connectors.fileConnection;
 
 import java.io.IOException;
 import java.time.LocalDate;

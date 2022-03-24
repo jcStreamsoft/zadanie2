@@ -1,4 +1,4 @@
-package zadanie2;
+package zadanie2.connectors.sqlConnection;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;

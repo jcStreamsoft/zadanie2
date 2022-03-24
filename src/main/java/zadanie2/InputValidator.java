@@ -3,7 +3,7 @@ package zadanie2;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import zadanie2.enums.Currency;
+import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.inputExceptions.DateAfterTodayException;
 import zadanie2.exceptions.inputExceptions.DateBeforeFirstException;
 import zadanie2.exceptions.inputExceptions.InputValueNullException;
@@ -36,8 +36,8 @@ public class InputValidator {
 		}
 	}
 
-	public static void checkCurrency(Currency currency) throws InputValueNullException {
-		if (currency == null) {
+	public static void checkCurrency(CurrencyCode currencyCode) throws InputValueNullException {
+		if (currencyCode == null) {
 			throw new InputValueNullException("Typ Currency nie może być NULL");
 		}
 	}

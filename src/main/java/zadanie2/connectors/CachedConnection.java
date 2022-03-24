@@ -15,7 +15,7 @@ public class CachedConnection implements DataConnection {
 
 	@Override
 	public void saveRateData(RateData rateData) {
-		String key = rateData.getDate() + "/" + rateData.getCurrency();
+		String key = rateData.getDate() + "/" + rateData.getCurrencyCode();
 
 		data.put(key, rateData);
 	}
@@ -40,16 +40,4 @@ public class CachedConnection implements DataConnection {
 		}
 	}
 
-//	private RateData findOlderDateRate(Request request, LocalDate date) {
-//		for (int i = 1; i < MAX_ATTEMPTS; i++) {
-//			LocalDate newDate = date.minusDays(i);
-//			String key = newDate + "/" + request.getCurrency();
-//			System.out.println(key.toString());
-//			RateData rateData = data.get(key);
-//			if (rateData != null) {
-//				return rateData;
-//			}
-//		}
-//		return null;
-//	}
 }

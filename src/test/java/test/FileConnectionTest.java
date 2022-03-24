@@ -7,8 +7,8 @@ import java.time.LocalDate;
 
 import org.testng.annotations.Test;
 
-import zadanie2.connectors.FileConnection;
-import zadanie2.enums.Currency;
+import zadanie2.connectors.fileConnection.FileConnection;
+import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.model.RateData;
 import zadanie2.model.Request;
@@ -22,10 +22,10 @@ public class FileConnectionTest {
 		LocalDate date = LocalDate.parse("2022-03-07");
 		BigDecimal rate = new BigDecimal("4.5722");
 		BigDecimal value = new BigDecimal("1");
-		Currency currency = Currency.USD;
-		RateData expected = new RateData(date, rate, currency);
-		Request request = Request.getBuilder(value, currency).date(date).build();
-		FileConnection file = new FileConnection(new FileJsonParser(), "src/test/resources/fileArrayJson.txt");
+		CurrencyCode currencyCode = CurrencyCode.USD;
+		RateData expected = new RateData(date, rate, currencyCode);
+		Request request = Request.getBuilder(value, currencyCode).date(date).build();
+		FileConnection file = new FileConnection(new FileJsonParser(), "dane/fileArrayJson.txt");
 		// when
 		RateData result = file.getRateData(request);
 		// then
@@ -39,10 +39,10 @@ public class FileConnectionTest {
 		LocalDate olderDate = LocalDate.parse("2022-03-04");
 		BigDecimal value = new BigDecimal("1");
 		BigDecimal rate = new BigDecimal("4.3910");
-		Currency currency = Currency.USD;
-		RateData expected = new RateData(olderDate, rate, currency);
-		Request request = Request.getBuilder(value, currency).date(date).build();
-		FileConnection file = new FileConnection(new FileJsonParser(), "src/test/resources/fileArrayJson.txt");
+		CurrencyCode currencyCode = CurrencyCode.USD;
+		RateData expected = new RateData(olderDate, rate, currencyCode);
+		Request request = Request.getBuilder(value, currencyCode).date(date).build();
+		FileConnection file = new FileConnection(new FileJsonParser(), "dane/fileArrayJson.txt");
 		// when
 		RateData result = file.getRateData(request, olderDate);
 		// then

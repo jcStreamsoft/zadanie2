@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import org.testng.annotations.Test;
 
 import zadanie2.connectors.CachedConnection;
-import zadanie2.enums.Currency;
+import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.model.RateData;
 import zadanie2.model.Request;
@@ -22,9 +22,9 @@ public class CachedConnectionTest {
 		// given
 		LocalDate date = LocalDate.now();
 		BigDecimal value = new BigDecimal("1");
-		Currency currency = Currency.USD;
-		RateData expected = new RateData(date, value, currency);
-		Request request = Request.getBuilder(value, currency).date(date).build();
+		CurrencyCode currencyCode = CurrencyCode.USD;
+		RateData expected = new RateData(date, value, currencyCode);
+		Request request = Request.getBuilder(value, currencyCode).date(date).build();
 		CachedConnection cache = new CachedConnection();
 		cache.saveRateData(expected);
 		// when
@@ -40,9 +40,9 @@ public class CachedConnectionTest {
 		LocalDate date = LocalDate.now();
 		LocalDate newDate = LocalDate.now().minusDays(1);
 		BigDecimal value = new BigDecimal("1");
-		Currency currency = Currency.USD;
-		RateData rateData = new RateData(date, value, currency);
-		Request request = Request.getBuilder(value, currency).date(newDate).build();
+		CurrencyCode currencyCode = CurrencyCode.USD;
+		RateData rateData = new RateData(date, value, currencyCode);
+		Request request = Request.getBuilder(value, currencyCode).date(newDate).build();
 		CachedConnection cache = new CachedConnection();
 		cache.saveRateData(rateData);
 		// when
@@ -57,9 +57,9 @@ public class CachedConnectionTest {
 		// given
 		LocalDate date = LocalDate.now();
 		BigDecimal value = new BigDecimal("1");
-		Currency currency = Currency.USD;
-		Currency newCurrency = Currency.EUR;
-		RateData rateData = new RateData(date, value, currency);
+		CurrencyCode currencyCode = CurrencyCode.USD;
+		CurrencyCode newCurrency = CurrencyCode.EUR;
+		RateData rateData = new RateData(date, value, currencyCode);
 		Request request = Request.getBuilder(value, newCurrency).date(date).build();
 		CachedConnection cache = new CachedConnection();
 		cache.saveRateData(rateData);
@@ -76,9 +76,9 @@ public class CachedConnectionTest {
 		LocalDate date = LocalDate.now();
 		LocalDate olderDate = LocalDate.now().minusDays(1);
 		BigDecimal value = new BigDecimal("1");
-		Currency currency = Currency.USD;
-		RateData expected = new RateData(olderDate, value, currency);
-		Request request = Request.getBuilder(value, currency).date(date).build();
+		CurrencyCode currencyCode = CurrencyCode.USD;
+		RateData expected = new RateData(olderDate, value, currencyCode);
+		Request request = Request.getBuilder(value, currencyCode).date(date).build();
 		CachedConnection cache = new CachedConnection();
 		cache.saveRateData(expected);
 		// when

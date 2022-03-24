@@ -1,4 +1,4 @@
-package zadanie2.connectors;
+package zadanie2.connectors.apiConnection;
 
 import java.io.BufferedReader;
 import java.io.IOException;

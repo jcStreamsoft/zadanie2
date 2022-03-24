@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -20,6 +22,9 @@ public class Country implements Serializable {
 
 	@Column(name = "country_name")
 	private String name;
+	@OneToOne
+	@JoinColumn(name = "currency_id")
+	private Currency currency_id;
 
 	public Country(String name) {
 		super();
@@ -46,9 +51,17 @@ public class Country implements Serializable {
 		this.name = name;
 	}
 
+	public Currency getCurrency_id() {
+		return currency_id;
+	}
+
+	public void setCurrency_id(Currency currency_id) {
+		this.currency_id = currency_id;
+	}
+
 	@Override
 	public String toString() {
-		return "Country [id=" + id + ", name=" + name + "]";
+		return "Country [id=" + id + ", name=" + name + ", currency_id=" + currency_id + "]";
 	}
 
 }

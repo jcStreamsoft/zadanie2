@@ -30,6 +30,14 @@ public class Rate {
 	@JoinColumn(name = "currency_id")
 	private Currency currency;
 
+	public Rate(BigDecimal value, LocalDate date, Currency currency) {
+		super();
+
+		this.value = value;
+		this.date = date;
+		this.currency = currency;
+	}
+
 	public Rate() {
 		super();
 	}
