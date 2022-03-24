@@ -23,7 +23,7 @@ public class Request {
 		return value;
 	}
 
-	public CurrencyCode getCurrency() {
+	public CurrencyCode getCurrencyCode() {
 		return currencyCode;
 	}
 
@@ -35,7 +35,7 @@ public class Request {
 		this.dataFormat = dataFormat;
 	}
 
-	public String getCurrencyCode() {
+	public String getCurrencyCodeString() {
 		return this.currencyCode.getCode();
 	}
 

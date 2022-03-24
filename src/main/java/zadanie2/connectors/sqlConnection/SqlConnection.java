@@ -22,7 +22,7 @@ public class SqlConnection implements DataConnection {
 	@Override
 	public RateData getRateData(Request request) throws ReadingRateDataException {
 		try {
-			RateData rateData = findRate(request.getCurrencyCode(), request.getDate());
+			RateData rateData = findRate(request.getCurrencyCodeString(), request.getDate());
 			if (rateData == null) {
 				throw new RateNotFoundException();
 			}
@@ -36,7 +36,7 @@ public class SqlConnection implements DataConnection {
 	@Override
 	public RateData getRateData(Request request, LocalDate date) throws ReadingRateDataException {
 		try {
-			RateData rateData = findRate(request.getCurrencyCode(), date);
+			RateData rateData = findRate(request.getCurrencyCodeString(), date);
 			if (rateData == null) {
 				throw new RateNotFoundException();
 			}

@@ -105,6 +105,6 @@ public class Exchanger {
 			throws NegativeValueException, InputValueNullException, DateBeforeFirstException, DateAfterTodayException {
 		InputValidator.checkDate(request.getDate());
 		InputValidator.checkValue(request.getValue());
-		InputValidator.checkCurrency(request.getCurrency());
+		InputValidator.checkCurrency(request.getCurrencyCode());
 	}
 }

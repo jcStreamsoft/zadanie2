@@ -32,7 +32,7 @@ public class ApiConnection implements DataConnection {
 
 	@Override
 	public RateData getRateData(Request request) throws ReadingRateDataException {
-		this.urlCreator = new UrlCreator(request.getCurrencyCode(), parser.getFormatType());
+		this.urlCreator = new UrlCreator(request.getCurrencyCodeString(), parser.getFormatType());
 		try {
 			RateData rateData = null;
 			if (connectionExitst(createURL(request.getDate()))) {
@@ -40,7 +40,7 @@ public class ApiConnection implements DataConnection {
 				connection.disconnect();
 
 				Rate rate = parser.getRateFromString(result);
-				rateData = new RateData(request.getDate(), rate.getMid(), request.getCurrency());
+				rateData = new RateData(request.getDate(), rate.getMid(), request.getCurrencyCode());
 			}
 			return rateData;
 		} catch (IOException | CreatingURLException e) {
@@ -52,7 +52,7 @@ public class ApiConnection implements DataConnection {
 
 	@Override
 	public RateData getRateData(Request request, LocalDate date) throws ReadingRateDataException {
-		this.urlCreator = new UrlCreator(request.getCurrencyCode(), parser.getFormatType());
+		this.urlCreator = new UrlCreator(request.getCurrencyCodeString(), parser.getFormatType());
 		try {
 			RateData rateData = null;
 			if (connectionExitst(createURL(date))) {
@@ -60,7 +60,7 @@ public class ApiConnection implements DataConnection {
 				connection.disconnect();
 
 				Rate rate = parser.getRateFromString(result);
-				rateData = new RateData(date, rate.getMid(), request.getCurrency());
+				rateData = new RateData(date, rate.getMid(), request.getCurrencyCode());
 			}
 			return rateData;
 		} catch (IOException | CreatingURLException e) {

@@ -34,7 +34,7 @@ public class FileConnection implements DataConnection {
 			Rate rate = findRate(rates, request);
 			RateData rateData = null;
 			if (rate != null) {
-				rateData = new RateData(request.getDate(), rate.getMid(), request.getCurrency());
+				rateData = new RateData(request.getDate(), rate.getMid(), request.getCurrencyCode());
 			}
 			return rateData;
 		} catch (IOException e) {
@@ -52,7 +52,7 @@ public class FileConnection implements DataConnection {
 			Rate rate = findRate(rates, request, date);
 			RateData rateData = null;
 			if (rate != null) {
-				rateData = new RateData(date, rate.getMid(), request.getCurrency());
+				rateData = new RateData(date, rate.getMid(), request.getCurrencyCode());
 			}
 			return rateData;
 		} catch (IOException e) {
@@ -88,22 +88,21 @@ public class FileConnection implements DataConnection {
 		return null;
 	}
 
-//	public Rate findOlderDateRate(List<RatesTable> ratesTable, Request request, LocalDate date) {
-//		for (int i = 1; i < MAX_ATTEMPTS; i++) {
-//			newDate = date.minusDays(i);
-//			Rate rate = findRate(ratesTable, request, newDate);
-//			if (rate != null) {
-//				return rate;
-//			}
-//		}
-//		return null;
-//	}
+	public void printCurrencies() throws ParsingException, IOException {
+		List<RatesTable> rates = parser.getRateFromString(fileReader.getStringFromFile());
+
+		RatesTable rateTable = rates.get(0);
+		List<Rate> rateList = rateTable.getRates();
+		for (Rate r : rateList) {
+			System.out.println(r.getCode().toUpperCase() + "(\"" + r.getCode().toLowerCase() + "\"),");
+		}
+	}
 
 	private boolean dateEquals(RatesTable rateTable, LocalDate date) {
 		return rateTable.getEffectiveDate().isEqual(date);
 	}
 
 	private boolean currencyCodeEquals(Rate rate, Request request) {
-		return rate.getCode().equals(request.getCurrencyCode().toUpperCase());
+		return rate.getCode().equals(request.getCurrencyCodeString().toUpperCase());
 	}
 }

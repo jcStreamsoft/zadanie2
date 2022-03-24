@@ -25,7 +25,7 @@ public class Main {
 		LocalDate date = LocalDate.parse("2002-01-02");
 
 		List<DataConnection> connections = List.of(new SqlConnection(),
-				new FileConnection(new FileJsonParser(), "fileOldArrayJson.txt"),
+				new FileConnection(new FileJsonParser(), "dane/fileOldArrayJson.txt"),
 				new ApiConnection(new ApiJsonParser()));
 		Exchanger nbp = new Exchanger(connections);
 		Request request = Request.getBuilder(value, CurrencyCode.EUR).date(date).build();
