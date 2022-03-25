@@ -7,6 +7,7 @@ import java.util.List;
 import zadanie2.exceptions.ExchangerException;
 import zadanie2.exceptions.RateNotFoundException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
+import zadanie2.exceptions.dataConnectionExceptions.SavingRateDataException;
 import zadanie2.exceptions.inputExceptions.DateAfterTodayException;
 import zadanie2.exceptions.inputExceptions.DateBeforeFirstException;
 import zadanie2.exceptions.inputExceptions.InputValueNullException;
@@ -97,7 +98,11 @@ public class Exchanger {
 
 	private void saveRateData(RateData rateData) {
 		for (DataConnection dataConnection : dataConnections) {
-			dataConnection.saveRateData(rateData);
+			try {
+				dataConnection.saveRateData(rateData);
+			} catch (SavingRateDataException e) {
+				// saving error
+			}
 		}
 	}
 

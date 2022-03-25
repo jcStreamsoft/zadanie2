@@ -22,7 +22,7 @@ public class Main {
 
 	public static void test1() throws IOException {
 		BigDecimal value = new BigDecimal(2);
-		LocalDate date = LocalDate.parse("2002-01-02");
+		LocalDate date = LocalDate.parse("2005-01-02");
 
 		List<DataConnection> connections = List.of(new SqlConnection(),
 				new FileConnection(new FileJsonParser(), "dane/fileOldArrayJson.txt"),
