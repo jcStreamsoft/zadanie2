@@ -75,6 +75,17 @@ public class FileConnection implements DataConnection {
 		return null;
 	}
 
+	public void printCurrencies() throws ParsingException, IOException {
+		List<RatesTable> rates = parser.getRateFromString(fileReader.getStringFromFile());
+
+		RatesTable rateTable = rates.get(0);
+		List<Rate> rateList = rateTable.getRates();
+		for (Rate r : rateList) {
+
+			System.out.println(r.getCode().toUpperCase() + "(\"" + r.getCode().toLowerCase() + "\"),");
+		}
+	}
+
 	private Rate findRate(List<RatesTable> ratesTable, Request request, LocalDate date) {
 		for (RatesTable rateTable : ratesTable) {
 			if (dateEquals(rateTable, date)) {
