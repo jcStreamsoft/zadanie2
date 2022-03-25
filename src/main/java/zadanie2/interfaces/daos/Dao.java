@@ -1,4 +1,4 @@
-package zadanie2.interfaces.cruds;
+package zadanie2.interfaces.daos;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface Dao<T> {
 
 	void save(T t) throws DaoException;
 
-	void update(T t, String[] params) throws DaoException;
+	void update(long id, T t) throws DaoException;
 
-	void delete(T t) throws DaoException;
+	void deleteById(long id) throws DaoException;
 }
