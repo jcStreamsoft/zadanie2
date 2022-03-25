@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import zadanie2.enums.CurrencyCode;
-import zadanie2.exceptions.RateNotFoundException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.interfaces.DataConnection;
 import zadanie2.model.RateData;
@@ -22,10 +21,7 @@ public class SqlConnection implements DataConnection {
 	@Override
 	public RateData getRateData(Request request) throws ReadingRateDataException {
 		try {
-			RateData rateData = findRate(request.getCurrencyCodeString(), request.getDate());
-			if (rateData == null) {
-				throw new RateNotFoundException();
-			}
+			RateData rateData = findRate(request, request.getDate());
 			return rateData;
 		} catch (Exception e) {
 			throw new ReadingRateDataException("Blad zczytywania sql", e);
@@ -36,10 +32,7 @@ public class SqlConnection implements DataConnection {
 	@Override
 	public RateData getRateData(Request request, LocalDate date) throws ReadingRateDataException {
 		try {
-			RateData rateData = findRate(request.getCurrencyCodeString(), date);
-			if (rateData == null) {
-				throw new RateNotFoundException();
-			}
+			RateData rateData = findRate(request, date);
 			return rateData;
 		} catch (Exception e) {
 			throw new ReadingRateDataException("Blad zczytywania sql", e);
@@ -82,9 +75,10 @@ public class SqlConnection implements DataConnection {
 		session.close();
 	}
 
-	private RateData findRate(String code, LocalDate date) throws Exception {
+	private RateData findRate(Request request, LocalDate date) throws Exception {
 		Session session = createSession();
-		Query query = session.createSQLQuery("select r.date, r.value,  c.currency_code from Rate r "
+		String code = request.getCurrencyCodeString().toUpperCase();
+		Query query = session.createSQLQuery("select r.value,  c.currency_code from Rate r "
 				+ " join currency as c on c.currency_id = r.currency_id "
 				+ " where r.date= :date AND  c.currency_code = :code");
 		query.setParameter("date", date);
@@ -95,10 +89,9 @@ public class SqlConnection implements DataConnection {
 
 		if (results.size() != 0) {
 			Object[] tab = results.get(0);
-			LocalDate newDate = LocalDate.parse((String) tab[0]);
-			BigDecimal newRate = new BigDecimal((String) tab[1]);
-			CurrencyCode newCurrency = CurrencyCode.valueOf(tab[2].toString().toLowerCase());
-			rateData = new RateData(newDate, newRate, newCurrency);
+			BigDecimal newRate = new BigDecimal(tab[0].toString());
+			CurrencyCode newCurrency = CurrencyCode.valueOf(tab[1].toString());
+			rateData = new RateData(date, newRate, newCurrency);
 		}
 
 		closeSession(session);
