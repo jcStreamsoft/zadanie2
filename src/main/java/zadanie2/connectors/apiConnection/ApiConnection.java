@@ -30,26 +30,6 @@ public class ApiConnection implements DataConnection {
 		this.parser = parser;
 	}
 
-//	@Override
-//	public RateData getRateData(Request request) throws ReadingRateDataException {
-//		this.urlCreator = new UrlCreator(request.getCurrencyCodeString(), parser.getFormatType());
-//		try {
-//			RateData rateData = null;
-//			if (connectionExitst(createURL(request.getDate()))) {
-//				String result = createStringFromStream(connection.getInputStream());
-//				connection.disconnect();
-//
-//				Rate rate = parser.getRateFromString(result);
-//				rateData = new RateData(request.getDate(), rate.getMid(), request.getCurrencyCode());
-//			}
-//			return rateData;
-//		} catch (IOException | CreatingURLException e) {
-//			throw new ReadingRateDataException("Blad przy połączeniu z NBP ", e);
-//		} catch (ParsingException e) {
-//			throw new ReadingRateDataException("Blad przy parsowaniu danych z NBP ", e);
-//		}
-//	}
-
 	@Override
 	public RateData getRateData(Request request, LocalDate date) throws ReadingRateDataException {
 		this.urlCreator = new UrlCreator(request.getCurrencyCodeString(), parser.getFormatType());
@@ -88,21 +68,5 @@ public class ApiConnection implements DataConnection {
 		return new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines()
 				.collect(Collectors.joining());
 	}
-
-//	public LocalDate findOlderExistingDate(Request request, LocalDate date) {
-//		for (int i = 1; i < MAX_ATTEMPTS; i++) {
-//			try {
-//				LocalDate newDate = date.minusDays(i);
-//				if (connectionExitst(createURL(newDate))) {
-//					return newDate;
-//				}
-//			} catch (IOException e) {
-//				continue;
-//			} catch (CreatingURLException e) {
-//				continue;
-//			}
-//		}
-//		return null;
-//	}
 
 }

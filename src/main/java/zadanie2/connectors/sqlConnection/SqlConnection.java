@@ -23,20 +23,6 @@ public class SqlConnection implements DataConnection {
 		this.CurrencyDao = new CurrencyDao();
 	}
 
-//	@Override
-//	public RateData getRateData(Request request) throws ReadingRateDataException {
-//		try {
-//			RateData rateData = null;
-//			Rate rate = findRate(request.getDate(), request.getCurrencyCode());
-//			if (rate != null) {
-//				rateData = new RateData(request.getDate(), rate.getValue(), request.getCurrencyCode());
-//			}
-//			return rateData;
-//		} catch (Exception e) {
-//			throw new ReadingRateDataException("Blad zczytywania sql", e);
-//		}
-//	}
-
 	@Override
 	public RateData getRateData(Request request, LocalDate date) throws ReadingRateDataException {
 		try {
