@@ -2,8 +2,8 @@ package zadanie2.connectors.sqlConnection;
 
 import java.time.LocalDate;
 
-import zadanie2.connectors.CurrencyDao;
-import zadanie2.connectors.RateDao;
+import zadanie2.daos.CurrencyDao;
+import zadanie2.daos.RateDao;
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.DaoException.DaoException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
@@ -23,19 +23,19 @@ public class SqlConnection implements DataConnection {
 		this.CurrencyDao = new CurrencyDao();
 	}
 
-	@Override
-	public RateData getRateData(Request request) throws ReadingRateDataException {
-		try {
-			RateData rateData = null;
-			Rate rate = findRate(request.getDate(), request.getCurrencyCode());
-			if (rate != null) {
-				rateData = new RateData(request.getDate(), rate.getValue(), request.getCurrencyCode());
-			}
-			return rateData;
-		} catch (Exception e) {
-			throw new ReadingRateDataException("Blad zczytywania sql", e);
-		}
-	}
+//	@Override
+//	public RateData getRateData(Request request) throws ReadingRateDataException {
+//		try {
+//			RateData rateData = null;
+//			Rate rate = findRate(request.getDate(), request.getCurrencyCode());
+//			if (rate != null) {
+//				rateData = new RateData(request.getDate(), rate.getValue(), request.getCurrencyCode());
+//			}
+//			return rateData;
+//		} catch (Exception e) {
+//			throw new ReadingRateDataException("Blad zczytywania sql", e);
+//		}
+//	}
 
 	@Override
 	public RateData getRateData(Request request, LocalDate date) throws ReadingRateDataException {
@@ -60,7 +60,7 @@ public class SqlConnection implements DataConnection {
 		}
 	}
 
-	public Rate findRate(LocalDate date, CurrencyCode currencyCode) throws DaoException {
+	private Rate findRate(LocalDate date, CurrencyCode currencyCode) throws DaoException {
 		Currency currency2 = CurrencyDao.getByCurrencyCode(currencyCode);
 		return rateDao.getRateByDateAndCurrencyCode(currency2, date);
 	}

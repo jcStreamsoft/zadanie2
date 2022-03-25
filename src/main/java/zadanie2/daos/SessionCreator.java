@@ -1,9 +1,8 @@
-package zadanie2.connectors;
+package zadanie2.daos;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import zadanie2.connectors.sqlConnection.HibernateFactory;
 import zadanie2.exceptions.CreatingSessionException;
 
 public class SessionCreator {

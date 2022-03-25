@@ -24,7 +24,7 @@ public class SqlConnectionTest {
 		RateData expected = new RateData(LocalDate.parse("2002-01-02"), new BigDecimal("3.54960000000000000000"),
 				CurrencyCode.EUR);
 		// when
-		RateData result = sqlConnection.getRateData(request);
+		RateData result = sqlConnection.getRateData(request, request.getDate());
 		// then
 		assertEquals(result, expected);
 	}
@@ -51,7 +51,7 @@ public class SqlConnectionTest {
 				.build();
 		RateData expected = null;
 		// when
-		RateData result = sqlConnection.getRateData(request);
+		RateData result = sqlConnection.getRateData(request, request.getDate());
 		// then
 		assertEquals(result, expected);
 	}

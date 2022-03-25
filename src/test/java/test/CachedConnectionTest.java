@@ -1,6 +1,5 @@
 package test;
 
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 
@@ -28,7 +27,7 @@ public class CachedConnectionTest {
 		CachedConnection cache = new CachedConnection();
 		cache.saveRateData(expected);
 		// when
-		RateData result = cache.getRateData(request);
+		RateData result = cache.getRateData(request, request.getDate());
 
 		// then
 		assertEquals(result, expected);
@@ -46,7 +45,7 @@ public class CachedConnectionTest {
 		CachedConnection cache = new CachedConnection();
 		cache.saveRateData(rateData);
 		// when
-		RateData result = cache.getRateData(request);
+		RateData result = cache.getRateData(request, request.getDate());
 
 		// then
 		assertNotEquals(result, rateData);
@@ -64,7 +63,7 @@ public class CachedConnectionTest {
 		CachedConnection cache = new CachedConnection();
 		cache.saveRateData(rateData);
 		// when
-		RateData result = cache.getRateData(request);
+		RateData result = cache.getRateData(request, request.getDate());
 
 		// then
 		assertNotEquals(result, rateData);

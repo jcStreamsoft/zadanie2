@@ -56,7 +56,7 @@ public class ExchangerTest {
 		// when
 		RateData result = exchanger.findRate(request);
 		// then
-		verify(spyApiCon, times(1)).getRateData(request);
+		verify(spyApiCon, times(1)).getRateData(request, request.getDate());
 		assertEquals(result, expected);
 	}
 
@@ -72,8 +72,8 @@ public class ExchangerTest {
 		// when
 		RateData result = exchanger.findRate(request);
 		// then
-		verify(spyApiCon, times(1)).getRateData(request);
-		verify(spyFileCon, times(1)).getRateData(request);
+		verify(spyApiCon, times(1)).getRateData(request, request.getDate());
+		verify(spyFileCon, times(1)).getRateData(request, request.getDate());
 		assertEquals(result, expected);
 	}
 
@@ -92,7 +92,7 @@ public class ExchangerTest {
 		// when
 		RateData result = exchanger.findRate(request);
 		// then
-		verify(spyApiCon, times(1)).getRateData(request);
+		verify(spyApiCon, times(1)).getRateData(request, request.getDate());
 		verify(spyApiCon, times(1)).getRateData(request, LocalDate.parse("2002-01-04"));
 		assertEquals(result, expected);
 	}
@@ -109,8 +109,8 @@ public class ExchangerTest {
 		// when
 		RateData result = exchanger.findRate(request);
 		// then
-		verify(spyFileCon, times(1)).getRateData(request);
-		verify(spyApiCon, times(1)).getRateData(request);
+		verify(spyFileCon, times(1)).getRateData(request, request.getDate());
+		verify(spyApiCon, times(1)).getRateData(request, request.getDate());
 		verify(spyFileCon, times(1)).getRateData(request, LocalDate.parse("2002-01-04"));
 		verify(spyApiCon, times(1)).getRateData(request, LocalDate.parse("2002-01-04"));
 		assertEquals(result, expected);
@@ -127,8 +127,8 @@ public class ExchangerTest {
 		// when
 		RateData result = exchanger.findRate(request);
 		// then
-		verify(spyFileCon, times(1)).getRateData(request);
-		verify(spyCacheCon, times(1)).getRateData(request);
+		verify(spyFileCon, times(1)).getRateData(request, request.getDate());
+		verify(spyCacheCon, times(1)).getRateData(request, request.getDate());
 		verify(spyFileCon, times(1)).getRateData(request, LocalDate.parse("2002-01-04"));
 		verify(spyCacheCon, times(1)).getRateData(request, LocalDate.parse("2002-01-04"));
 		assertEquals(result, null);

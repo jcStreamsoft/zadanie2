@@ -58,30 +58,17 @@ public class Exchanger {
 	}
 
 	public RateData findRate(Request request) throws ReadingRateDataException {
-		RateData rateData = findRateForPreciseDate(request);
-		if (rateData == null) {
-			for (int i = 0; i < MAX_ATTEMPTS; i++) {
-				LocalDate olderDate = request.getDate().minusDays(i);
-				rateData = findOlderRate(request, olderDate);
-			}
-		}
-		return rateData;
-	}
-
-	private RateData findRateForPreciseDate(Request request) {
-		for (DataConnection dataConnection : dataConnections) {
-			try {
-				RateData rateData = dataConnection.getRateData(request);
-				if (rateData != null) {
-					return rateData;
-				}
-			} catch (ReadingRateDataException e) {
+		for (int i = 0; i < MAX_ATTEMPTS; i++) {
+			LocalDate currentDate = request.getDate().minusDays(i);
+			RateData rateData = findRateForDate(request, currentDate);
+			if (rateData != null) {
+				return rateData;
 			}
 		}
 		return null;
 	}
 
-	private RateData findOlderRate(Request request, LocalDate date) {
+	private RateData findRateForDate(Request request, LocalDate date) {
 		for (DataConnection dataConnection : dataConnections) {
 			try {
 				RateData rateData = null;

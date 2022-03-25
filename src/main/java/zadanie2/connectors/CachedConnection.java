@@ -20,12 +20,12 @@ public class CachedConnection implements DataConnection {
 		data.put(key, rateData);
 	}
 
-	@Override
-	public RateData getRateData(Request request) throws ReadingRateDataException {
-		String key = request.getDate() + "/" + request.getCurrencyCode();
-		RateData rateData = data.get(key);
-		return rateData;
-	}
+//	@Override
+//	public RateData getRateData(Request request) throws ReadingRateDataException {
+//		String key = request.getDate() + "/" + request.getCurrencyCode();
+//		RateData rateData = data.get(key);
+//		return rateData;
+//	}
 
 	@Override
 	public RateData getRateData(Request request, LocalDate date) throws ReadingRateDataException {

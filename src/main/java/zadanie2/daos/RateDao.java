@@ -1,4 +1,4 @@
-package zadanie2.connectors;
+package zadanie2.daos;
 
 import java.time.LocalDate;
 import java.util.List;

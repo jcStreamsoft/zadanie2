@@ -27,7 +27,7 @@ public class ApiConnectionTest {
 		Request request = Request.getBuilder(value, currencyCode).date(date).build();
 		ApiConnection api = new ApiConnection(new ApiJsonParser());
 		// when
-		RateData result = api.getRateData(request);
+		RateData result = api.getRateData(request, request.getDate());
 		// then
 		assertTrue(result.equals(expected));
 	}

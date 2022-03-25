@@ -27,7 +27,7 @@ public class FileConnectionTest {
 		Request request = Request.getBuilder(value, currencyCode).date(date).build();
 		FileConnection file = new FileConnection(new FileJsonParser(), "dane/fileArrayJson.txt");
 		// when
-		RateData result = file.getRateData(request);
+		RateData result = file.getRateData(request, request.getDate());
 		// then
 		assertTrue(result.equals(expected));
 	}

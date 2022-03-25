@@ -26,23 +26,23 @@ public class FileConnection implements DataConnection {
 
 	}
 
-	@Override
-	public RateData getRateData(Request request) throws ReadingRateDataException {
-		try {
-
-			List<RatesTable> rates = parser.getRateFromString(fileReader.getStringFromFile());
-			Rate rate = findRate(rates, request);
-			RateData rateData = null;
-			if (rate != null) {
-				rateData = new RateData(request.getDate(), rate.getMid(), request.getCurrencyCode());
-			}
-			return rateData;
-		} catch (IOException e) {
-			throw new ReadingRateDataException("Nie znaleziono pliku o sciezce : " + filePath, e);
-		} catch (ParsingException e) {
-			throw new ReadingRateDataException("Blad przy parsowaniu : " + filePath, e);
-		}
-	}
+//	@Override
+//	public RateData getRateData(Request request) throws ReadingRateDataException {
+//		try {
+//
+//			List<RatesTable> rates = parser.getRateFromString(fileReader.getStringFromFile());
+//			Rate rate = findRate(rates, request);
+//			RateData rateData = null;
+//			if (rate != null) {
+//				rateData = new RateData(request.getDate(), rate.getMid(), request.getCurrencyCode());
+//			}
+//			return rateData;
+//		} catch (IOException e) {
+//			throw new ReadingRateDataException("Nie znaleziono pliku o sciezce : " + filePath, e);
+//		} catch (ParsingException e) {
+//			throw new ReadingRateDataException("Blad przy parsowaniu : " + filePath, e);
+//		}
+//	}
 
 	@Override
 	public RateData getRateData(Request request, LocalDate date) throws ReadingRateDataException {
@@ -62,18 +62,18 @@ public class FileConnection implements DataConnection {
 		}
 	}
 
-	private Rate findRate(List<RatesTable> ratesTable, Request request) {
-		for (RatesTable rateTable : ratesTable) {
-			if (dateEquals(rateTable, request.getDate())) {
-				for (Rate rate : rateTable.getRates()) {
-					if (currencyCodeEquals(rate, request)) {
-						return rate;
-					}
-				}
-			}
-		}
-		return null;
-	}
+//	private Rate findRate(List<RatesTable> ratesTable, Request request) {
+//		for (RatesTable rateTable : ratesTable) {
+//			if (dateEquals(rateTable, request.getDate())) {
+//				for (Rate rate : rateTable.getRates()) {
+//					if (currencyCodeEquals(rate, request)) {
+//						return rate;
+//					}
+//				}
+//			}
+//		}
+//		return null;
+//	}
 
 	private Rate findRate(List<RatesTable> ratesTable, Request request, LocalDate date) {
 		for (RatesTable rateTable : ratesTable) {

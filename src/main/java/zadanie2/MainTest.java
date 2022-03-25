@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
-import zadanie2.connectors.sqlConnection.HibernateFactory;
+import zadanie2.daos.HibernateFactory;
 import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.DaoException.RateDaoException;
 import zadanie2.model.hibernate.Rate;
