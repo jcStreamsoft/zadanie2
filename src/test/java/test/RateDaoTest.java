@@ -13,7 +13,7 @@ import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.model.hibernate.Currency;
 import zadanie2.model.hibernate.Rate;
 
-public class DaoRateTest {
+public class RateDaoTest {
 
 	@Test
 	public void shouldSaveGetAndDeleteRate_whenGivenCorrectData() throws DaoException {

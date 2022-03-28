@@ -7,8 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import zadanie2.daos.HibernateFactory;
-import zadanie2.daos.RateDao;
-import zadanie2.exceptions.daoExceptions.DaoException;
 
 public class MainTest {
 
@@ -26,9 +24,13 @@ public class MainTest {
 		System.out.println(list);
 	}
 
-	public static void test2(int id) throws DaoException {
-		RateDao rateDao = new RateDao();
-		rateDao.deleteById(id);
+	public static void test2(int id) throws Exception {
+		HibernateFactory factory = new HibernateFactory();
+		SessionFactory sessionFactory = factory.factory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("from Currency ");
+		List list = query.list();
+		System.out.println(list);
 	}
-
 }

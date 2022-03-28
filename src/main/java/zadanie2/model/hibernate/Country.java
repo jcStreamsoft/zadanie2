@@ -24,7 +24,7 @@ public class Country implements Serializable {
 	private String name;
 	@OneToOne
 	@JoinColumn(name = "currency_id")
-	private Currency currency_id;
+	private Currency currency;
 
 	public Country(String name) {
 		super();
@@ -51,17 +51,17 @@ public class Country implements Serializable {
 		this.name = name;
 	}
 
-	public Currency getCurrency_id() {
-		return currency_id;
+	public Currency getCurrency() {
+		return currency;
 	}
 
-	public void setCurrency_id(Currency currency_id) {
-		this.currency_id = currency_id;
+	public void setCurrency(Currency currency_id) {
+		this.currency = currency_id;
 	}
 
 	@Override
 	public String toString() {
-		return "Country [id=" + id + ", name=" + name + ", currency_id=" + currency_id + "]";
+		return "Country [id=" + id + ", name=" + name + ", currency_id=" + currency + "]";
 	}
 
 }

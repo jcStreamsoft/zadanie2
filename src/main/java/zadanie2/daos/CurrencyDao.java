@@ -54,8 +54,16 @@ public class CurrencyDao implements Dao<Currency> {
 
 	@Override
 	public void update(long id, Currency t) throws DaoException {
-		// TODO Auto-generated method stub
-
+		try {
+			Session session = SessionCreator.createSession();
+			Query query = session.createQuery("update Currency set currency_code =:currency_code  where rate_id = :id");
+			query.setParameter("currency_code", t.getCode());
+			query.setParameter("id", id);
+			query.executeUpdate();
+			SessionCreator.closeSession(session);
+		} catch (Exception e) {
+			throw new RateDaoException("Blad przy update Rate", e);
+		}
 	}
 
 	@Override
@@ -66,9 +74,8 @@ public class CurrencyDao implements Dao<Currency> {
 			session.delete(currency);
 			SessionCreator.closeSession(session);
 		} catch (Exception e) {
-			throw new RateDaoException("Blad przy usuwaniu Rate", e);
+			throw new RateDaoException("Blad przy usuwaniu Currency", e);
 		}
-
 	}
 
 	public Currency getByCurrencyCode(CurrencyCode currencyCode) throws DaoException {
