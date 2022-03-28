@@ -1,4 +1,4 @@
-package zadanie2.exceptions.DaoException;
+package zadanie2.exceptions.daoExceptions;
 
 public class CurrencyDaoException extends DaoException {
 

@@ -2,7 +2,7 @@ package zadanie2.interfaces.daos;
 
 import java.util.List;
 
-import zadanie2.exceptions.DaoException.DaoException;
+import zadanie2.exceptions.daoExceptions.DaoException;
 
 public interface Dao<T> {
 

@@ -7,9 +7,9 @@ import org.hibernate.query.Query;
 
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.CreatingSessionException;
-import zadanie2.exceptions.DaoException.CurrencyDaoException;
-import zadanie2.exceptions.DaoException.DaoException;
-import zadanie2.exceptions.DaoException.RateDaoException;
+import zadanie2.exceptions.daoExceptions.CurrencyDaoException;
+import zadanie2.exceptions.daoExceptions.DaoException;
+import zadanie2.exceptions.daoExceptions.RateDaoException;
 import zadanie2.interfaces.daos.Dao;
 import zadanie2.model.hibernate.Currency;
 
@@ -19,7 +19,7 @@ public class CurrencyDao implements Dao<Currency> {
 	public Currency get(long id) throws DaoException {
 		try {
 			Session session = SessionCreator.createSession();
-			Query query = session.createQuery("from Currency where rate_id = :id ");
+			Query query = session.createQuery("from Currency where currency_id = :id ");
 			query.setParameter("id", id);
 			Currency currency = (Currency) query.uniqueResult();
 			SessionCreator.closeSession(session);

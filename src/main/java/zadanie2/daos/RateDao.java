@@ -6,8 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import zadanie2.exceptions.DaoException.DaoException;
-import zadanie2.exceptions.DaoException.RateDaoException;
+import zadanie2.exceptions.daoExceptions.DaoException;
+import zadanie2.exceptions.daoExceptions.RateDaoException;
 import zadanie2.interfaces.daos.Dao;
 import zadanie2.model.hibernate.Currency;
 import zadanie2.model.hibernate.Rate;
@@ -64,7 +64,7 @@ public class RateDao implements Dao<Rate> {
 			query.executeUpdate();
 			SessionCreator.closeSession(session);
 		} catch (Exception e) {
-			throw new RateDaoException("Blad przy usuwaniu Rate", e);
+			throw new RateDaoException("Blad przy update Rate", e);
 		}
 	}
 

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import zadanie2.daos.CurrencyDao;
 import zadanie2.daos.RateDao;
 import zadanie2.enums.CurrencyCode;
-import zadanie2.exceptions.DaoException.DaoException;
+import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.exceptions.dataConnectionExceptions.SavingRateDataException;
 import zadanie2.interfaces.DataConnection;

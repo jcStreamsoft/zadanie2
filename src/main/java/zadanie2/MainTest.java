@@ -8,12 +8,12 @@ import org.hibernate.query.Query;
 
 import zadanie2.daos.HibernateFactory;
 import zadanie2.daos.RateDao;
-import zadanie2.exceptions.DaoException.DaoException;
+import zadanie2.exceptions.daoExceptions.DaoException;
 
 public class MainTest {
 
 	public static void main(String[] args) throws Exception {
-		test2(1);
+		test2(18);
 	}
 
 	public static void test1() throws Exception {
