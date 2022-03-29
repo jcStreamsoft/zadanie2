@@ -20,8 +20,9 @@ public class RateDaoTest {
 	@Test
 	public void shouldSaveGetAndDeleteRate_whenGivenCorrectData() throws DaoException, CreatingSessionException {
 		// given
-		RateDao rateDao = new RateDao(new SessionCreator());
-		CurrencyDao currencyDao = new CurrencyDao(new SessionCreator());
+		SessionCreator sessionCreator = new SessionCreator();
+		RateDao rateDao = new RateDao(sessionCreator);
+		CurrencyDao currencyDao = new CurrencyDao(sessionCreator);
 		Currency currency = currencyDao.get(1);
 		Rate rate = new Rate(new BigDecimal("10.00000000000000000000"), LocalDate.parse("2022-03-25"), currency);
 		long id = 0;
@@ -57,8 +58,9 @@ public class RateDaoTest {
 	@Test
 	public void shouldSaveGetUpdateAndDeleteRate_whenGivenCorrectData() throws DaoException, CreatingSessionException {
 		// given
-		RateDao rateDao = new RateDao(new SessionCreator());
-		CurrencyDao currencyDao = new CurrencyDao(new SessionCreator());
+		SessionCreator sessionCreator = new SessionCreator();
+		RateDao rateDao = new RateDao(sessionCreator);
+		CurrencyDao currencyDao = new CurrencyDao(sessionCreator);
 		Currency currency = currencyDao.get(1);
 		Rate rate = new Rate(new BigDecimal("10.00000000000000000000"), LocalDate.parse("2022-03-25"), currency);
 		long id = 0;

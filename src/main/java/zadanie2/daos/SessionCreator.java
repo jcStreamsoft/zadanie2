@@ -2,20 +2,29 @@ package zadanie2.daos;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import zadanie2.exceptions.CreatingSessionException;
 
-public class SessionCreator {
-	private SessionFactory sessionFactory;
+public final class SessionCreator {
+	private static SessionFactory sessionFactory;
 
 	public SessionCreator() throws CreatingSessionException {
-
-		HibernateFactory factory = new HibernateFactory();
 		try {
-			sessionFactory = factory.factory();
+			sessionFactory = null;
 		} catch (Exception e) {
+			sessionFactory = null;
 			throw new CreatingSessionException("Blad przy tworzeniu sesji", e);
 		}
+	}
+
+	private SessionFactory createSessionFactory() {
+		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+		SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+
+		return sessionFactory;
 	}
 
 	public Session createSession() throws CreatingSessionException {
@@ -28,4 +37,5 @@ public class SessionCreator {
 		session.getTransaction().commit();
 		session.close();
 	}
+
 }

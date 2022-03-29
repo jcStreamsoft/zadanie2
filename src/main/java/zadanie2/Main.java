@@ -1,6 +1,5 @@
 package zadanie2;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,12 +15,12 @@ import zadanie2.parsers.apiParsers.ApiJsonParser;
 import zadanie2.parsers.fileParsers.FileJsonParser;
 
 public class Main {
-	public static void main(String[] args) throws IOException, CreatingSessionException {
+	public static void main(String[] args) throws CreatingSessionException {
 		test1();
 
 	}
 
-	public static void test1() throws IOException, CreatingSessionException {
+	public static void test1() throws CreatingSessionException {
 		BigDecimal value = new BigDecimal(2);
 		LocalDate date = LocalDate.parse("2005-01-02");
 

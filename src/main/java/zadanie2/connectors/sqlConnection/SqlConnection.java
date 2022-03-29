@@ -18,14 +18,7 @@ import zadanie2.model.hibernate.Rate;
 
 public class SqlConnection implements DataConnection {
 	private RateDao rateDao;
-	private CurrencyDao CurrencyDao;
-	private SessionCreator sessionCreator;
-
-	public SqlConnection() throws CreatingSessionException {
-		this.sessionCreator = new SessionCreator();
-		this.rateDao = new RateDao(sessionCreator);
-		this.CurrencyDao = new CurrencyDao(sessionCreator);
-	}
+	private CurrencyDao currencyDao;
 
 	@Override
 	public RateData getRateData(Request request, LocalDate date) throws ReadingRateDataException {
@@ -50,18 +43,26 @@ public class SqlConnection implements DataConnection {
 		}
 	}
 
-	private Rate findRate(LocalDate date, CurrencyCode currencyCode) throws DaoException {
-		Currency currency2 = CurrencyDao.getByCurrencyCode(currencyCode);
+	private Rate findRate(LocalDate date, CurrencyCode currencyCode) throws DaoException, CreatingSessionException {
+		createDaos();
+		Currency currency2 = currencyDao.getByCurrencyCode(currencyCode);
 		return rateDao.getRateByDateAndCurrencyCode(currency2, date);
 	}
 
-	private void saveRateDataToSql(RateData rateData) throws DaoException {
-		Currency currency = CurrencyDao.getByCurrencyCode(rateData.getCurrencyCode());
+	private void saveRateDataToSql(RateData rateData) throws DaoException, CreatingSessionException {
+		createDaos();
+		Currency currency = currencyDao.getByCurrencyCode(rateData.getCurrencyCode());
 		if (currency != null) {
 			Rate oldRate = rateDao.getRateByDateAndCurrencyCode(currency, rateData.getDate());
 			if (oldRate == null) {
 				rateDao.save(new Rate(rateData.getRate(), rateData.getDate(), currency));
 			}
 		}
+	}
+
+	private void createDaos() throws CreatingSessionException {
+		SessionCreator sessionCreator = new SessionCreator();
+		this.currencyDao = new CurrencyDao(sessionCreator);
+		this.rateDao = new RateDao(sessionCreator);
 	}
 }

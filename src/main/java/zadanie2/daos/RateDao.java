@@ -46,9 +46,13 @@ public class RateDao extends BaseDao<Rate> {
 	@Override
 	public void save(Rate t) throws DaoException {
 		try {
+			System.out.println("1");
 			Session session = sessionCreator.createSession();
+			System.out.println("2");
 			session.save(t);
+			System.out.println("3");
 			sessionCreator.closeSession(session);
+			System.out.println("4");
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy zapisie Rate", e);
 		}
