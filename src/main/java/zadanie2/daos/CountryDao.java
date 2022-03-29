@@ -7,19 +7,23 @@ import org.hibernate.query.Query;
 
 import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.exceptions.daoExceptions.RateDaoException;
-import zadanie2.interfaces.daos.Dao;
 import zadanie2.model.hibernate.Country;
 
-public class CountryDao implements Dao<Country> {
+public class CountryDao extends BaseDao<Country> {
+
+	public CountryDao(SessionCreator sessionCreator) {
+		super(sessionCreator);
+	}
 
 	@Override
 	public Country get(long id) throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
-			Query query = session.createQuery("from Country where rate_id = :id ");
+
+			Session session = sessionCreator.createSession();
+			Query query = session.createQuery("from Country where country_id = :id ");
 			query.setParameter("id", id);
 			Country country = (Country) query.uniqueResult();
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 			return country;
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy wyszukiwaniu Country po id", e);
@@ -29,9 +33,9 @@ public class CountryDao implements Dao<Country> {
 	@Override
 	public List<Country> getAll() throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
+			Session session = sessionCreator.createSession();
 			List<Country> list = session.createQuery("from Country").list();
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 			return list;
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy odczycie tabeli Country", e);
@@ -41,9 +45,9 @@ public class CountryDao implements Dao<Country> {
 	@Override
 	public void save(Country t) throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
+			Session session = sessionCreator.createSession();
 			session.save(t);
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy zapisie Country", e);
 		}
@@ -53,14 +57,14 @@ public class CountryDao implements Dao<Country> {
 	@Override
 	public void update(long id, Country t) throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
+			Session session = sessionCreator.createSession();
 			Query query = session.createQuery(
-					"update Country set country_name =:country_name, currency_id = :currency_id  where rate_id = :id");
+					"update Country set country_name =:country_name, currency_id = :currency_id  where country_id = :id");
 			query.setParameter("country_name", t.getName());
 			query.setParameter("country_name", t.getCurrency().getId());
 			query.setParameter("id", id);
 			query.executeUpdate();
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy update Rate", e);
 		}
@@ -70,10 +74,10 @@ public class CountryDao implements Dao<Country> {
 	@Override
 	public void deleteById(long id) throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
+			Session session = sessionCreator.createSession();
 			Country country = get(id);
 			session.delete(country);
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy usuwaniu Country", e);
 		}

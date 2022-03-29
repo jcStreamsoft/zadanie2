@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import zadanie2.connectors.sqlConnection.SqlConnection;
 import zadanie2.enums.CurrencyCode;
+import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.model.RateData;
 import zadanie2.model.Request;
@@ -16,7 +17,7 @@ import zadanie2.model.Request;
 public class SqlConnectionTest {
 
 	@Test
-	public void shouldRetrunRate_whenGivenRateExistInSql() throws ReadingRateDataException {
+	public void shouldRetrunRate_whenGivenRateExistInSql() throws ReadingRateDataException, CreatingSessionException {
 		// given
 		SqlConnection sqlConnection = new SqlConnection();
 		Request request = Request.getBuilder(new BigDecimal("3"), CurrencyCode.EUR).date(LocalDate.parse("2002-01-02"))
@@ -30,7 +31,8 @@ public class SqlConnectionTest {
 	}
 
 	@Test
-	public void shouldRetrunRate_whenGivenRateExistInSqlwithDate() throws ReadingRateDataException {
+	public void shouldRetrunRate_whenGivenRateExistInSqlwithDate()
+			throws ReadingRateDataException, CreatingSessionException {
 		// given
 		SqlConnection sqlConnection = new SqlConnection();
 		LocalDate date = LocalDate.parse("2002-01-02");
@@ -44,7 +46,8 @@ public class SqlConnectionTest {
 	}
 
 	@Test
-	public void shouldRetrunNull_whenGivenRateThatDontExistInSql() throws ReadingRateDataException {
+	public void shouldRetrunNull_whenGivenRateThatDontExistInSql()
+			throws ReadingRateDataException, CreatingSessionException {
 		// given
 		SqlConnection sqlConnection = new SqlConnection();
 		Request request = Request.getBuilder(new BigDecimal("3"), CurrencyCode.EUR).date(LocalDate.now().plusDays(1))
@@ -57,7 +60,8 @@ public class SqlConnectionTest {
 	}
 
 	@Test
-	public void shouldRetrunNull_whenGivenRateThatDontExistInSqlwithDate() throws ReadingRateDataException {
+	public void shouldRetrunNull_whenGivenRateThatDontExistInSqlwithDate()
+			throws ReadingRateDataException, CreatingSessionException {
 		// given
 		SqlConnection sqlConnection = new SqlConnection();
 		LocalDate date = LocalDate.now().plusDays(1);

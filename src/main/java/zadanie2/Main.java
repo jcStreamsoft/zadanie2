@@ -9,18 +9,19 @@ import zadanie2.connectors.apiConnection.ApiConnection;
 import zadanie2.connectors.fileConnection.FileConnection;
 import zadanie2.connectors.sqlConnection.SqlConnection;
 import zadanie2.enums.CurrencyCode;
+import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.interfaces.DataConnection;
 import zadanie2.model.Request;
 import zadanie2.parsers.apiParsers.ApiJsonParser;
 import zadanie2.parsers.fileParsers.FileJsonParser;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, CreatingSessionException {
 		test1();
 
 	}
 
-	public static void test1() throws IOException {
+	public static void test1() throws IOException, CreatingSessionException {
 		BigDecimal value = new BigDecimal(2);
 		LocalDate date = LocalDate.parse("2005-01-02");
 

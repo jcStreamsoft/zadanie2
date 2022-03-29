@@ -4,7 +4,9 @@ import java.time.LocalDate;
 
 import zadanie2.daos.CurrencyDao;
 import zadanie2.daos.RateDao;
+import zadanie2.daos.SessionCreator;
 import zadanie2.enums.CurrencyCode;
+import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.exceptions.dataConnectionExceptions.SavingRateDataException;
@@ -17,10 +19,12 @@ import zadanie2.model.hibernate.Rate;
 public class SqlConnection implements DataConnection {
 	private RateDao rateDao;
 	private CurrencyDao CurrencyDao;
+	private SessionCreator sessionCreator;
 
-	public SqlConnection() {
-		this.rateDao = new RateDao();
-		this.CurrencyDao = new CurrencyDao();
+	public SqlConnection() throws CreatingSessionException {
+		this.sessionCreator = new SessionCreator();
+		this.rateDao = new RateDao(sessionCreator);
+		this.CurrencyDao = new CurrencyDao(sessionCreator);
 	}
 
 	@Override

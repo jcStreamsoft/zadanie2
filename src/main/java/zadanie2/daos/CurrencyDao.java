@@ -10,19 +10,21 @@ import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.daoExceptions.CurrencyDaoException;
 import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.exceptions.daoExceptions.RateDaoException;
-import zadanie2.interfaces.daos.Dao;
 import zadanie2.model.hibernate.Currency;
 
-public class CurrencyDao implements Dao<Currency> {
+public class CurrencyDao extends BaseDao<Currency> {
+	public CurrencyDao(SessionCreator sessionCreator) {
+		super(sessionCreator);
+	}
 
 	@Override
 	public Currency get(long id) throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
+			Session session = sessionCreator.createSession();
 			Query query = session.createQuery("from Currency where currency_id = :id ");
 			query.setParameter("id", id);
 			Currency currency = (Currency) query.uniqueResult();
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 			return currency;
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy wyszukiwaniu Currency po id", e);
@@ -32,9 +34,9 @@ public class CurrencyDao implements Dao<Currency> {
 	@Override
 	public List<Currency> getAll() throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
+			Session session = sessionCreator.createSession();
 			List<Currency> list = session.createQuery("from Currency").list();
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 			return list;
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy odczycie tabeli Currency", e);
@@ -44,9 +46,9 @@ public class CurrencyDao implements Dao<Currency> {
 	@Override
 	public void save(Currency t) throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
+			Session session = sessionCreator.createSession();
 			session.save(t);
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy zapisie Currency", e);
 		}
@@ -55,12 +57,13 @@ public class CurrencyDao implements Dao<Currency> {
 	@Override
 	public void update(long id, Currency t) throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
-			Query query = session.createQuery("update Currency set currency_code =:currency_code  where rate_id = :id");
+			Session session = sessionCreator.createSession();
+			Query query = session
+					.createQuery("update Currency set currency_code =:currency_code  where currency_id = :id");
 			query.setParameter("currency_code", t.getCode());
 			query.setParameter("id", id);
 			query.executeUpdate();
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy update Rate", e);
 		}
@@ -69,10 +72,10 @@ public class CurrencyDao implements Dao<Currency> {
 	@Override
 	public void deleteById(long id) throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
+			Session session = sessionCreator.createSession();
 			Currency currency = get(id);
 			session.delete(currency);
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy usuwaniu Currency", e);
 		}
@@ -80,7 +83,7 @@ public class CurrencyDao implements Dao<Currency> {
 
 	public Currency getByCurrencyCode(CurrencyCode currencyCode) throws DaoException {
 		try {
-			Session session = SessionCreator.createSession();
+			Session session = sessionCreator.createSession();
 			Query query = session.createQuery("from Currency where currency_code = :code");
 			String code = currencyCode.getCode().toUpperCase();
 			query.setParameter("code", code);
@@ -89,7 +92,7 @@ public class CurrencyDao implements Dao<Currency> {
 			if (list.size() > 0) {
 				currency = list.get(0);
 			}
-			SessionCreator.closeSession(session);
+			sessionCreator.closeSession(session);
 			return currency;
 		} catch (CreatingSessionException e) {
 			throw new CurrencyDaoException("Blad przy wyszukiwaniu Currency po currencyCode", e);
