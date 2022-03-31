@@ -27,4 +27,15 @@ public class UrlCreator {
 			throw new CreatingURLException("Blad tworzenia linku", e);
 		}
 	}
+
+	public URL createUrlForRatesInterval(LocalDate dateStart, LocalDate dateEnd) throws CreatingURLException {
+		try {
+			newUrl = new String(
+					NBP_ADRESS + currencyCode + "/" + dateStart + "/" + dateEnd + "/?format=" + responseType);
+			System.out.println(newUrl);
+			return new URL(newUrl);
+		} catch (MalformedURLException e) {
+			throw new CreatingURLException("Blad tworzenia linku", e);
+		}
+	}
 }

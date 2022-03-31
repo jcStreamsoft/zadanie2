@@ -13,7 +13,7 @@ public final class SessionCreator {
 
 	public SessionCreator() throws CreatingSessionException {
 		try {
-			sessionFactory = null;
+			sessionFactory = createSessionFactory();
 		} catch (Exception e) {
 			sessionFactory = null;
 			throw new CreatingSessionException("Blad przy tworzeniu sesji", e);

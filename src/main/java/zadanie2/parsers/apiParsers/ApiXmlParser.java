@@ -1,6 +1,7 @@
 package zadanie2.parsers.apiParsers;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
@@ -38,6 +39,16 @@ public class ApiXmlParser implements ApiParse {
 
 	private Rate extractRate(RatesTable ratesTable) throws ReadingCurrencyRateException {
 		return ratesTable.getRates().get(0);
+	}
+
+	@Override
+	public List<Rate> getRateList(String inputString) throws ParsingException {
+		try {
+			RatesTable ratesTable = parseData(inputString);
+			return ratesTable.getRates();
+		} catch (Exception e) {
+			throw new ParsingException("Błłd parsowania danych", e);
+		}
 	}
 
 }

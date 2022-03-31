@@ -1,6 +1,8 @@
 package zadanie2.connectors.sqlConnection;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
 import zadanie2.daos.CurrencyDao;
 import zadanie2.daos.RateDao;
@@ -19,6 +21,18 @@ import zadanie2.model.hibernate.Rate;
 public class SqlConnection implements DataConnection {
 	private RateDao rateDao;
 	private CurrencyDao currencyDao;
+
+	public SqlConnection() {
+		SessionCreator sessionCreator;
+		try {
+			sessionCreator = new SessionCreator();
+			this.currencyDao = new CurrencyDao(sessionCreator);
+			this.rateDao = new RateDao(sessionCreator);
+		} catch (CreatingSessionException e) {
+			this.currencyDao = null;
+			this.rateDao = null;
+		}
+	}
 
 	@Override
 	public RateData getRateData(Request request, LocalDate date) throws ReadingRateDataException {
@@ -44,13 +58,13 @@ public class SqlConnection implements DataConnection {
 	}
 
 	private Rate findRate(LocalDate date, CurrencyCode currencyCode) throws DaoException, CreatingSessionException {
-		createDaos();
+
 		Currency currency2 = currencyDao.getByCurrencyCode(currencyCode);
 		return rateDao.getRateByDateAndCurrencyCode(currency2, date);
 	}
 
 	private void saveRateDataToSql(RateData rateData) throws DaoException, CreatingSessionException {
-		createDaos();
+
 		Currency currency = currencyDao.getByCurrencyCode(rateData.getCurrencyCode());
 		if (currency != null) {
 			Rate oldRate = rateDao.getRateByDateAndCurrencyCode(currency, rateData.getDate());
@@ -60,9 +74,16 @@ public class SqlConnection implements DataConnection {
 		}
 	}
 
-	private void createDaos() throws CreatingSessionException {
-		SessionCreator sessionCreator = new SessionCreator();
-		this.currencyDao = new CurrencyDao(sessionCreator);
-		this.rateDao = new RateDao(sessionCreator);
+	public void saveRateDataListToSql(List<RateData> rateDatalist) throws DaoException, CreatingSessionException {
+		Currency currency = currencyDao.getByCurrencyCode(rateDatalist.get(0).getCurrencyCode());
+		if (currency != null) {
+			List<Rate> rateList = new LinkedList<>();
+			for (RateData r : rateDatalist) {
+				rateList.add(new Rate(r.getRate(), r.getDate(), currency));
+			}
+			if (rateDatalist != null) {
+				rateDao.saveRateList(rateList);
+			}
+		}
 	}
 }

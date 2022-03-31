@@ -46,13 +46,9 @@ public class RateDao extends BaseDao<Rate> {
 	@Override
 	public void save(Rate t) throws DaoException {
 		try {
-			System.out.println("1");
 			Session session = sessionCreator.createSession();
-			System.out.println("2");
 			session.save(t);
-			System.out.println("3");
 			sessionCreator.closeSession(session);
-			System.out.println("4");
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy zapisie Rate", e);
 		}
@@ -69,6 +65,7 @@ public class RateDao extends BaseDao<Rate> {
 			query.setParameter("currency_id", t.getCurrency().getId());
 			query.setParameter("id", id);
 			query.executeUpdate();
+
 			sessionCreator.closeSession(session);
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy update Rate", e);
@@ -104,6 +101,18 @@ public class RateDao extends BaseDao<Rate> {
 			return rate;
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy wyszukiwaniu Rate po dacie i Currency", e);
+		}
+	}
+
+	public void saveRateList(List<Rate> rateList) throws RateDaoException {
+		try {
+			Session session = sessionCreator.createSession();
+			for (Rate rate : rateList) {
+				session.save(rate);
+			}
+			sessionCreator.closeSession(session);
+		} catch (Exception e) {
+			throw new RateDaoException("Blad przy zapisie Rate", e);
 		}
 	}
 

@@ -8,8 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
+import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.dataConnectionExceptions.CreatingURLException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.exceptions.parserExceptions.ParsingException;
@@ -67,6 +70,30 @@ public class ApiConnection implements DataConnection {
 	private String createStringFromStream(InputStream inputStream) {
 		return new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines()
 				.collect(Collectors.joining());
+	}
+
+	public List<RateData> getListOfRatesForCurrency(CurrencyCode code, LocalDate dateStart, LocalDate dateEnd)
+			throws ReadingRateDataException {
+		this.urlCreator = new UrlCreator(code.getCode(), parser.getFormatType());
+		try {
+			List<RateData> rateDataList = null;
+			if (connectionExitst(urlCreator.createUrlForRatesInterval(dateStart, dateEnd))) {
+				String result = createStringFromStream(connection.getInputStream());
+				connection.disconnect();
+
+				List<Rate> rateList = parser.getRateList(result);
+				rateDataList = new LinkedList<>();
+				for (Rate r : rateList) {
+					RateData rateData = new RateData(r.getEffectiveDate(), r.getMid(), code);
+					rateDataList.add(rateData);
+				}
+			}
+			return rateDataList;
+		} catch (IOException | CreatingURLException e) {
+			throw new ReadingRateDataException("Blad przy połczeniu z NBP ", e);
+		} catch (ParsingException e) {
+			throw new ReadingRateDataException("Blad przy parsowaniu danych z NBP ", e);
+		}
 	}
 
 }

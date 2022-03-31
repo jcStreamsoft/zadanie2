@@ -4,8 +4,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import zadanie2.connectors.apiConnection.ApiConnection;
+import zadanie2.connectors.sqlConnection.SqlConnection;
+import zadanie2.enums.CurrencyCode;
+import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.ExchangerException;
 import zadanie2.exceptions.RateNotFoundException;
+import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.exceptions.dataConnectionExceptions.SavingRateDataException;
 import zadanie2.exceptions.inputExceptions.DateAfterTodayException;
@@ -81,6 +86,27 @@ public class Exchanger {
 			}
 		}
 		return null;
+	}
+
+	public static void saveRatesFormApiToSql(ApiConnection api, SqlConnection sql)
+			throws ReadingRateDataException, DaoException, CreatingSessionException {
+
+		for (CurrencyCode code : CurrencyCode.values()) {
+
+			List<RateData> rateData;
+			for (int i = 0; i < 20; i++) {
+				LocalDate dateStart = LocalDate.parse("2002-01-01").plusDays(365 * i);
+				LocalDate dateEnd = LocalDate.parse("2002-01-01").plusDays(365 * (i + 1));
+				rateData = api.getListOfRatesForCurrency(code, dateStart, dateEnd);
+				if (rateData != null) {
+					System.out.println(rateData.size() + " -- " + code);
+					sql.saveRateDataListToSql(rateData);
+				} else {
+					System.out.println("null -- " + code);
+				}
+			}
+
+		}
 	}
 
 	private void saveRateData(RateData rateData) {
