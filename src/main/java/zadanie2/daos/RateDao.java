@@ -21,7 +21,7 @@ public class RateDao extends BaseDao<Rate> {
 	public Rate get(long id) throws DaoException {
 		try {
 			Session session = sessionCreator.createSession();
-			Query query = session.createQuery("from Rate where rate_id = :id ");
+			Query query = session.createNamedQuery("Rate_findById", Rate.class);
 			query.setParameter("id", id);
 			Rate rate = (Rate) query.uniqueResult();
 			sessionCreator.closeSession(session);
@@ -87,28 +87,32 @@ public class RateDao extends BaseDao<Rate> {
 	public Rate getRateByDateAndCurrencyCode(Currency currency, LocalDate date) throws DaoException {
 		try {
 			Session session = sessionCreator.createSession();
-			Query query = session.createQuery("from Rate where currency_id = :id AND date = :date");
+			Query query = session.createNamedQuery("Rate_findByCurrencyIdAndDate", Rate.class);
 
 			query.setParameter("id", currency.getId());
 			query.setParameter("date", date);
 
-			List<Rate> list = query.list();
-			Rate rate = null;
-			if (list.size() > 0) {
-				rate = list.get(0);
-			}
+			Rate rate = (Rate) query.uniqueResult();
 			sessionCreator.closeSession(session);
 			return rate;
 		} catch (Exception e) {
-			throw new RateDaoException("Blad przy wyszukiwaniu Rate po dacie i Currency", e);
+			throw new RateDaoException("Blad przy wyszukiwaniu Rate po dacie i Currency id", e);
 		}
 	}
 
 	public void saveRateList(List<Rate> rateList) throws RateDaoException {
 		try {
 			Session session = sessionCreator.createSession();
+			Currency currency = rateList.get(0).getCurrency();
 			for (Rate rate : rateList) {
-				session.save(rate);
+				Query query = session.createNamedQuery("Rate_findByCurrencyIdAndDate", Rate.class);
+				query.setParameter("id", currency.getId());
+				query.setParameter("date", rate.getDate());
+
+				Rate dbRate = (Rate) query.uniqueResult();
+				if (dbRate == null) {
+					session.save(rate);
+				}
 			}
 			sessionCreator.closeSession(session);
 		} catch (Exception e) {
@@ -116,4 +120,57 @@ public class RateDao extends BaseDao<Rate> {
 		}
 	}
 
+	public void findMostChangedRateBetweenDates(LocalDate dateStart, LocalDate dateEnd) throws RateDaoException {
+		try {
+			Session session = sessionCreator.createSession();
+
+			Query query = session.getNamedNativeQuery("Rate_findMostChangedRateBetweenDates");
+			query.setParameter("dateStart", dateStart);
+			query.setParameter("dateEnd", dateEnd);
+
+			Object[] result = (Object[]) query.uniqueResult();
+			System.out.println(result[1] + " -- " + result[0]);
+			sessionCreator.closeSession(session);
+		} catch (Exception e) {
+			throw new RateDaoException("Blad przy odczycie Rate o najwiekszych zmianach w okresie", e);
+		}
+	}
+
+	public Rate findMaxRateBetweenDates(LocalDate dateStart, LocalDate dateEnd, Currency currency)
+			throws RateDaoException {
+		try {
+			Session session = sessionCreator.createSession();
+
+			Query query = session.getNamedNativeQuery("Rate_findMaxRateBetweenDates");
+			query.setParameter("dateStart", dateStart);
+			query.setParameter("dateEnd", dateEnd);
+			query.setParameter("id", currency.getId());
+			query.setParameter("dateStart1", dateStart);
+			query.setParameter("dateEnd1", dateEnd);
+			query.setParameter("id1", currency.getId());
+
+			Rate rate = (Rate) query.uniqueResult();
+			sessionCreator.closeSession(session);
+			return rate;
+		} catch (Exception e) {
+			throw new RateDaoException("Blad przy odczycie max Rate w okresie", e);
+		}
+	}
+
+	public Rate findMinRateBetweenDates(LocalDate dateStart, LocalDate dateEnd, Currency currency)
+			throws RateDaoException {
+		try {
+			Session session = sessionCreator.createSession();
+
+			Query query = session.getNamedNativeQuery("Rate_findMinRateBetweenDates");
+			query.setParameter("dateStart", dateStart);
+			query.setParameter("dateEnd", dateEnd);
+			query.setParameter("id", currency.getId());
+			Rate rate = (Rate) query.uniqueResult();
+			sessionCreator.closeSession(session);
+			return rate;
+		} catch (Exception e) {
+			throw new RateDaoException("Blad przy odczycie min Rate w okresie", e);
+		}
+	}
 }

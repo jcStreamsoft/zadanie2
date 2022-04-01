@@ -28,7 +28,7 @@ public class ApiJsonParser implements ApiParse {
 			Rate result = extractRate(ratesTable);
 			return result;
 		} catch (IOException e) {
-			throw new ParsingException("Błłd parsowania danych", e);
+			throw new ParsingException("Bład parsowania danych", e);
 		}
 	}
 
@@ -47,7 +47,7 @@ public class ApiJsonParser implements ApiParse {
 
 			return ratesTable.getRates();
 		} catch (IOException e) {
-			throw new ParsingException("Błłd parsowania danych", e);
+			throw new ParsingException("Bład parsowania danych", e);
 		}
 
 	}

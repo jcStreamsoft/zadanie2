@@ -32,7 +32,7 @@ public class FileJsonParser implements FileParse {
 			// BigDecimal result = extractRate(ratesTable);
 			return lista;
 		} catch (IOException e) {
-			throw new ParsingException("Błłd parsowania danych", e);
+			throw new ParsingException("Bład parsowania danych", e);
 		}
 	}
 

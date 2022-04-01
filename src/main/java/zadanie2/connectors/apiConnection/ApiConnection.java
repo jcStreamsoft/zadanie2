@@ -76,18 +76,29 @@ public class ApiConnection implements DataConnection {
 			throws ReadingRateDataException {
 		this.urlCreator = new UrlCreator(code.getCode(), parser.getFormatType());
 		try {
-			List<RateData> rateDataList = null;
-			if (connectionExitst(urlCreator.createUrlForRatesInterval(dateStart, dateEnd))) {
-				String result = createStringFromStream(connection.getInputStream());
-				connection.disconnect();
+			List<RateData> rateDataList = new LinkedList<>();
+			LocalDate currentDateStart = dateEnd;
+			LocalDate currentDateEnd = dateStart;
+			for (int i = 0; dateStart.compareTo(currentDateStart) < 0; i++) {
+				currentDateStart = dateEnd.minusMonths(i * 8);
+				currentDateEnd = dateEnd.minusMonths((i + 1) * 8);
 
-				List<Rate> rateList = parser.getRateList(result);
-				rateDataList = new LinkedList<>();
-				for (Rate r : rateList) {
-					RateData rateData = new RateData(r.getEffectiveDate(), r.getMid(), code);
-					rateDataList.add(rateData);
+				if (connectionExitst(urlCreator.createUrlForRatesInterval(currentDateEnd, currentDateStart))) {
+					String result = createStringFromStream(connection.getInputStream());
+					connection.disconnect();
+
+					List<Rate> rateList = parser.getRateList(result);
+
+					if (rateList.size() > 0) {
+						System.out.println(rateList.size());
+						for (Rate r : rateList) {
+							rateDataList.add(new RateData(r.getEffectiveDate(), r.getMid(), code));
+						}
+					}
+
 				}
 			}
+			System.out.println(rateDataList.size() + " -- " + code.getCode());
 			return rateDataList;
 		} catch (IOException | CreatingURLException e) {
 			throw new ReadingRateDataException("Blad przy połczeniu z NBP ", e);

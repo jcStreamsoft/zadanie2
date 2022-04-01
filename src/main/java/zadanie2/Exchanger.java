@@ -94,16 +94,16 @@ public class Exchanger {
 		for (CurrencyCode code : CurrencyCode.values()) {
 
 			List<RateData> rateData;
-			for (int i = 0; i < 20; i++) {
-				LocalDate dateStart = LocalDate.parse("2002-01-01").plusDays(365 * i);
-				LocalDate dateEnd = LocalDate.parse("2002-01-01").plusDays(365 * (i + 1));
-				rateData = api.getListOfRatesForCurrency(code, dateStart, dateEnd);
-				if (rateData != null) {
-					System.out.println(rateData.size() + " -- " + code);
-					sql.saveRateDataListToSql(rateData);
-				} else {
-					System.out.println("null -- " + code);
-				}
+			LocalDate dateStart = LocalDate.parse("2001-12-01");
+			LocalDate dateEnd = LocalDate.now();
+
+			rateData = api.getListOfRatesForCurrency(code, dateStart, dateEnd);
+
+			if (rateData != null) {
+				System.out.println(rateData.size() + " -- " + code);
+				sql.saveRateDataListToSql(rateData);
+			} else {
+				System.out.println("null --- " + code);
 			}
 
 		}

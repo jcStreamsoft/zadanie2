@@ -74,14 +74,14 @@ public class SqlConnection implements DataConnection {
 		}
 	}
 
-	public void saveRateDataListToSql(List<RateData> rateDatalist) throws DaoException, CreatingSessionException {
-		Currency currency = currencyDao.getByCurrencyCode(rateDatalist.get(0).getCurrencyCode());
+	public void saveRateDataListToSql(List<RateData> rateDataList) throws DaoException, CreatingSessionException {
+		Currency currency = currencyDao.getByCurrencyCode(rateDataList.get(0).getCurrencyCode());
 		if (currency != null) {
 			List<Rate> rateList = new LinkedList<>();
-			for (RateData r : rateDatalist) {
+			for (RateData r : rateDataList) {
 				rateList.add(new Rate(r.getRate(), r.getDate(), currency));
 			}
-			if (rateDatalist != null) {
+			if (rateList != null) {
 				rateDao.saveRateList(rateList);
 			}
 		}

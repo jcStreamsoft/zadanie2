@@ -6,7 +6,6 @@ import java.util.List;
 
 import zadanie2.connectors.apiConnection.ApiConnection;
 import zadanie2.connectors.fileConnection.FileConnection;
-import zadanie2.connectors.sqlConnection.SqlConnection;
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.interfaces.DataConnection;
@@ -22,9 +21,9 @@ public class Main {
 
 	public static void test1() throws CreatingSessionException {
 		BigDecimal value = new BigDecimal(2);
-		LocalDate date = LocalDate.parse("2005-01-02");
+		LocalDate date = LocalDate.parse("2002-01-02");
 
-		List<DataConnection> connections = List.of(new SqlConnection(),
+		List<DataConnection> connections = List.of(
 				new FileConnection(new FileJsonParser(), "dane/fileOldArrayJson.txt"),
 				new ApiConnection(new ApiJsonParser()));
 		Exchanger nbp = new Exchanger(connections);

@@ -29,7 +29,7 @@ public class ApiXmlParser implements ApiParse {
 			Rate result = extractRate(ratesTable);
 			return result;
 		} catch (Exception e) {
-			throw new ParsingException("Błłd parsowania danych", e);
+			throw new ParsingException("Bład parsowania danych", e);
 		}
 	}
 
@@ -47,7 +47,7 @@ public class ApiXmlParser implements ApiParse {
 			RatesTable ratesTable = parseData(inputString);
 			return ratesTable.getRates();
 		} catch (Exception e) {
-			throw new ParsingException("Błłd parsowania danych", e);
+			throw new ParsingException("Bład parsowania danych", e);
 		}
 	}
 

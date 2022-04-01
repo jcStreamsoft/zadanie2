@@ -11,6 +11,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+@org.hibernate.annotations.NamedQueries({
+		@org.hibernate.annotations.NamedQuery(name = "Rate_findById", query = "from Rate where rate_id = :id"),
+//		@org.hibernate.annotations.NamedQuery(name = "Rate_findMaxRateBetweenDates", query = "from rate r\r\n"
+//				+ "	where  (date between :dateStart AND :dateEnd ) AND currency_id = :id\r\n"
+//				+ "	AND r.value =(select max(value) 	from rate \r\n"
+//				+ "where (date between :dateStart1 AND :dateEnd1 ) AND currency_id = :id1)"),
+//		@org.hibernate.annotations.NamedQuery(name = "Rate_findMinRateBetweenDates", query = "from rate r\r\n"
+//				+ "	where  (date between :dateStart AND :dateEnd ) AND currency_id = :id\r\n"
+//				+ "	AND r.value =(select min(value) 	from rate \r\n"
+//				+ "where (date between :dateStart AND :dateEnd ) AND currency_id = :id)"),
+		@org.hibernate.annotations.NamedQuery(name = "Rate_findByCurrencyIdAndDate", query = "from Rate where currency_id = :id AND date = :date") })
+
+@org.hibernate.annotations.NamedNativeQueries(@org.hibernate.annotations.NamedNativeQuery(name = "Rate_findMostChangedRateBetweenDates", query = "select (max(r.value)- min(r.value)) as wynik , c.currency_code\r\n"
+		+ "	from rate r join currency c on c.currency_id = r.currency_id\r\n"
+		+ "	where r.date between :dateStart AND :dateEnd group by  c.currency_code\r\n"
+		+ "	order by wynik desc	limit 1"))
 @Entity
 @Table(name = "Rate")
 public class Rate {
