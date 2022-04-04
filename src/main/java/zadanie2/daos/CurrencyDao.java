@@ -1,5 +1,6 @@
 package zadanie2.daos;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -90,9 +91,8 @@ public class CurrencyDao extends BaseDao<Currency> {
 	}
 
 	public Currency getByCurrencyCode(CurrencyCode currencyCode) throws DaoException {
-		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
-			transaction = session.beginTransaction();
+			session.beginTransaction();
 			Query query = session.createQuery("from Currency where currency_code = :code");
 			String code = currencyCode.getCode().toUpperCase();
 			query.setParameter("code", code);
@@ -101,6 +101,25 @@ public class CurrencyDao extends BaseDao<Currency> {
 			if (list.size() > 0) {
 				currency = list.get(0);
 			}
+			session.getTransaction().commit();
+			return currency;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public Currency findMostChangedCurrencyBetweenDates(LocalDate dateStart, LocalDate dateEnd) {
+		try (Session session = sessionFactory.openSession()) {
+			session.beginTransaction();
+
+			Query query = session.getNamedNativeQuery(Currency.GET_MOST_CHANGED_BETWEEN_DATES);
+			query.setParameter("dateStart", dateStart);
+			query.setParameter("dateEnd", dateEnd);
+
+			Object[] result = (Object[]) query.uniqueResult();
+			System.out.println(result[1] + " -- " + result[0]);
+			String code = result[1].toString();
+			Currency currency = getByCurrencyCode(CurrencyCode.valueOf(code));
 			session.getTransaction().commit();
 			return currency;
 		} catch (Exception e) {

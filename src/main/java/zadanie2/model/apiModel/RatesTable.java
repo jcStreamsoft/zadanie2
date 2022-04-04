@@ -1,6 +1,7 @@
 package zadanie2.model.apiModel;
 
-import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 public class RatesTable {
@@ -15,7 +16,7 @@ public class RatesTable {
 	@JacksonXmlProperty(localName = "Code")
 	String code;
 	@JacksonXmlProperty(localName = "Rates")
-	ArrayList<Rate> rates;
+	List<Rate> rates;
 
 	public RatesTable() {
 		super();
@@ -45,11 +46,11 @@ public class RatesTable {
 		this.code = code;
 	}
 
-	public ArrayList<Rate> getRates() {
+	public List<Rate> getRates() {
 		return rates;
 	}
 
-	public void setRates(ArrayList<Rate> rates) {
+	public void setRates(List<Rate> rates) {
 		this.rates = rates;
 	}
 

@@ -9,8 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import zadanie2.exceptions.daoExceptions.DaoException;
-import zadanie2.exceptions.daoExceptions.RateDaoException;
 import zadanie2.model.hibernate.Currency;
 import zadanie2.model.hibernate.Rate;
 
@@ -21,10 +19,10 @@ public class RateDao extends BaseDao<Rate> {
 	}
 
 	@Override
-	public Rate get(long id) throws DaoException {
+	public Rate get(long id) {
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
-			Query query = session.createNamedQuery("Rate_findById", Rate.class);
+			Query query = session.createNamedQuery(Rate.GET_BY_ID, Rate.class);
 			query.setParameter("id", id);
 			Rate rate = (Rate) query.uniqueResult();
 			session.getTransaction().commit();
@@ -35,7 +33,7 @@ public class RateDao extends BaseDao<Rate> {
 	}
 
 	@Override
-	public List<Rate> getAll() throws DaoException {
+	public List<Rate> getAll() {
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
 			List<Rate> list = session.createQuery("from Rate").list();
@@ -61,7 +59,7 @@ public class RateDao extends BaseDao<Rate> {
 	}
 
 	@Override
-	public void update(long id, Rate t) throws DaoException {
+	public void update(long id, Rate t) {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
@@ -82,7 +80,7 @@ public class RateDao extends BaseDao<Rate> {
 	}
 
 	@Override
-	public void deleteById(long id) throws DaoException {
+	public void deleteById(long id) {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
@@ -96,10 +94,10 @@ public class RateDao extends BaseDao<Rate> {
 		}
 	}
 
-	public Rate getRateByDateAndCurrencyCode(Currency currency, LocalDate date) throws DaoException {
+	public Rate getRateByDateAndCurrencyCode(Currency currency, LocalDate date) {
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
-			Query query = session.createNamedQuery("Rate_findByCurrencyIdAndDate", Rate.class);
+			Query query = session.getNamedQuery(Rate.GET_BY_DATE_AND_CURRENCY_ID);
 
 			query.setParameter("id", currency.getId());
 			query.setParameter("date", date);
@@ -112,43 +110,22 @@ public class RateDao extends BaseDao<Rate> {
 		}
 	}
 
-	public void saveRateList(Set<Rate> rateList) throws RateDaoException {
-		try {
-			int count = 0;
-			for (Rate rate : rateList) {
-				save(rate);
-				count++;
-				if (count % 1_000 == 0) {
-					System.out.println(count + " -- zapisano ");
-				}
+	public void saveRateList(Set<Rate> rateList) {
+		int count = 0;
+		for (Rate rate : rateList) {
+			save(rate);
+			count++;
+			if (count % 1_000 == 0) {
+				System.out.println(count + " -- zapisano ");
 			}
-		} catch (Exception e) {
-			throw new RateDaoException("Blad przy zapisie Rate", e);
 		}
 	}
 
-	public void findMostChangedRateBetweenDates(LocalDate dateStart, LocalDate dateEnd) throws RateDaoException {
+	public Rate findMaxRateBetweenDates(LocalDate dateStart, LocalDate dateEnd, Currency currency) {
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
 
-			Query query = session.getNamedNativeQuery("Rate_findMostChangedRateBetweenDates");
-			query.setParameter("dateStart", dateStart);
-			query.setParameter("dateEnd", dateEnd);
-
-			Object[] result = (Object[]) query.uniqueResult();
-			System.out.println(result[1] + " -- " + result[0]);
-			session.getTransaction().commit();
-		} catch (Exception e) {
-			throw new RateDaoException("Blad przy wyszukiwaniu Kursu o najwiekszej różnicy", e);
-		}
-	}
-
-	public Rate findMaxRateBetweenDates(LocalDate dateStart, LocalDate dateEnd, Currency currency)
-			throws RateDaoException {
-		try (Session session = sessionFactory.openSession()) {
-			session.beginTransaction();
-
-			Query query = session.getNamedNativeQuery("Rate_findMaxRateBetweenDates");
+			Query query = session.getNamedQuery(Rate.GET_MAX_BETWEEN_DATES);
 			query.setParameter("dateStart", dateStart);
 			query.setParameter("dateEnd", dateEnd);
 			query.setParameter("id", currency.getId());
@@ -160,25 +137,26 @@ public class RateDao extends BaseDao<Rate> {
 			session.getTransaction().commit();
 			return rate;
 		} catch (Exception e) {
-			throw new RateDaoException("Blad przy wyszukiwaniu Kursu o maksimum w okresie", e);
+			return null;
 		}
 	}
 
-	public Rate findMinRateBetweenDates(LocalDate dateStart, LocalDate dateEnd, Currency currency)
-			throws RateDaoException {
+	public Rate findMinRateBetweenDates(LocalDate dateStart, LocalDate dateEnd, Currency currency) {
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
 
-			Query query = session.getNamedNativeQuery("Rate_findMinRateBetweenDates");
+			Query query = session.getNamedQuery(Rate.GET_MIN_BETWEEN_DATES);
 			query.setParameter("dateStart", dateStart);
 			query.setParameter("dateEnd", dateEnd);
 			query.setParameter("id", currency.getId());
+			query.setParameter("dateStart1", dateStart);
+			query.setParameter("dateEnd1", dateEnd);
+			query.setParameter("id1", currency.getId());
 			Rate rate = (Rate) query.uniqueResult();
 			session.getTransaction().commit();
 			return rate;
 		} catch (Exception e) {
-
-			throw new RateDaoException("Blad przy wyszukiwaniu Kursu o minimum w okresie", e);
+			return null;
 		}
 	}
 }

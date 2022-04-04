@@ -2,6 +2,7 @@ package zadanie2.model.fileModel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -13,7 +14,7 @@ public class RatesTable {
 	@JacksonXmlProperty(localName = "EffectiveDate")
 	LocalDate effectiveDate;
 	@JacksonXmlProperty(localName = "Rates")
-	ArrayList<Rate> rates;
+	List<Rate> rates;
 
 	public RatesTable() {
 		super();
@@ -43,7 +44,7 @@ public class RatesTable {
 		this.effectiveDate = LocalDate.parse(effectiveDate);
 	}
 
-	public ArrayList<Rate> getRates() {
+	public List<Rate> getRates() {
 		return rates;
 	}
 

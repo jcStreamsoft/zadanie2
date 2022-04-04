@@ -32,7 +32,7 @@ public class SqlConnection implements DataConnection {
 		this.rateDao = new RateDao(sessionFactory);
 	}
 
-	private SessionFactory createSessionFactory() {
+	public static SessionFactory createSessionFactory() {
 		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
 		SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
 		return sessionFactory;
