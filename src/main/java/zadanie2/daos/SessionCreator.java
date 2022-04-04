@@ -9,7 +9,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import zadanie2.exceptions.CreatingSessionException;
 
 public final class SessionCreator {
-	private static SessionFactory sessionFactory;
+	public static SessionFactory sessionFactory;
 
 	public SessionCreator() throws CreatingSessionException {
 		try {

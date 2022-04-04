@@ -2,8 +2,10 @@ package zadanie2.daos;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import zadanie2.exceptions.daoExceptions.DaoException;
@@ -44,13 +46,16 @@ public class RateDao extends BaseDao<Rate> {
 	}
 
 	@Override
-	public void save(Rate t) throws DaoException {
-		try {
-			Session session = sessionCreator.createSession();
+	public void save(Rate t) {
+		Transaction transaction = null;
+		try (Session session = sessionCreator.sessionFactory.openSession()) {
+			transaction = session.beginTransaction();
 			session.save(t);
-			sessionCreator.closeSession(session);
+			session.getTransaction().commit();
 		} catch (Exception e) {
-			throw new RateDaoException("Blad przy zapisie Rate", e);
+			if (transaction != null) {
+				transaction.rollback();
+			}
 		}
 	}
 
@@ -100,21 +105,16 @@ public class RateDao extends BaseDao<Rate> {
 		}
 	}
 
-	public void saveRateList(List<Rate> rateList) throws RateDaoException {
+	public void saveRateList(Set<Rate> rateList) throws RateDaoException {
 		try {
-			Session session = sessionCreator.createSession();
-			Currency currency = rateList.get(0).getCurrency();
+			int count = 0;
 			for (Rate rate : rateList) {
-				Query query = session.createNamedQuery("Rate_findByCurrencyIdAndDate", Rate.class);
-				query.setParameter("id", currency.getId());
-				query.setParameter("date", rate.getDate());
-
-				Rate dbRate = (Rate) query.uniqueResult();
-				if (dbRate == null) {
-					session.save(rate);
+				save(rate);
+				count++;
+				if (count % 1_000 == 0) {
+					System.out.println(count + " -- zapisano ");
 				}
 			}
-			sessionCreator.closeSession(session);
 		} catch (Exception e) {
 			throw new RateDaoException("Blad przy zapisie Rate", e);
 		}

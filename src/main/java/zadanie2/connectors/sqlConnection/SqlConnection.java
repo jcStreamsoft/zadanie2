@@ -1,8 +1,8 @@
 package zadanie2.connectors.sqlConnection;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import zadanie2.daos.CurrencyDao;
 import zadanie2.daos.RateDao;
@@ -74,16 +74,20 @@ public class SqlConnection implements DataConnection {
 		}
 	}
 
-	public void saveRateDataListToSql(List<RateData> rateDataList) throws DaoException, CreatingSessionException {
-		Currency currency = currencyDao.getByCurrencyCode(rateDataList.get(0).getCurrencyCode());
-		if (currency != null) {
-			List<Rate> rateList = new LinkedList<>();
-			for (RateData r : rateDataList) {
+	public void saveRateDataListToSql(Set<RateData> rateDataList) throws DaoException, CreatingSessionException {
+
+		Set<Rate> rateList = new LinkedHashSet<>();
+		for (RateData r : rateDataList) {
+
+			Currency currency = currencyDao.getByCurrencyCode(r.getCurrencyCode());
+			if (currency != null) {
 				rateList.add(new Rate(r.getRate(), r.getDate(), currency));
 			}
-			if (rateList != null) {
-				rateDao.saveRateList(rateList);
-			}
 		}
+		if (rateList != null) {
+			System.out.println(rateList.size() + " ---  przekonwertowane ");
+			rateDao.saveRateList(rateList);
+		}
+
 	}
 }

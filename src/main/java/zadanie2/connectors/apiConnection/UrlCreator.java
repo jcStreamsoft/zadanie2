@@ -32,7 +32,7 @@ public class UrlCreator {
 		try {
 			newUrl = new String(
 					NBP_ADRESS + currencyCode + "/" + dateStart + "/" + dateEnd + "/?format=" + responseType);
-			System.out.println(newUrl);
+			// System.out.println(newUrl);
 			return new URL(newUrl);
 		} catch (MalformedURLException e) {
 			throw new CreatingURLException("Blad tworzenia linku", e);

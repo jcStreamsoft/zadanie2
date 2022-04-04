@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @org.hibernate.annotations.NamedQueries({
 		@org.hibernate.annotations.NamedQuery(name = "Rate_findById", query = "from Rate where rate_id = :id"),
@@ -28,7 +29,8 @@ import javax.persistence.Table;
 		+ "	where r.date between :dateStart AND :dateEnd group by  c.currency_code\r\n"
 		+ "	order by wynik desc	limit 1"))
 @Entity
-@Table(name = "Rate")
+@Table(name = "Rate", uniqueConstraints = {
+		@UniqueConstraint(name = "UniqueDateCurrencyCode", columnNames = { "date", "currency_id" }) })
 public class Rate {
 	@Id
 	@GeneratedValue

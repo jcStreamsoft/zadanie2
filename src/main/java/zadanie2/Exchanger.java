@@ -3,10 +3,10 @@ package zadanie2;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import zadanie2.connectors.apiConnection.ApiConnection;
 import zadanie2.connectors.sqlConnection.SqlConnection;
-import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.ExchangerException;
 import zadanie2.exceptions.RateNotFoundException;
@@ -91,22 +91,19 @@ public class Exchanger {
 	public static void saveRatesFormApiToSql(ApiConnection api, SqlConnection sql)
 			throws ReadingRateDataException, DaoException, CreatingSessionException {
 
-		for (CurrencyCode code : CurrencyCode.values()) {
+		Set<RateData> rateData;
+		LocalDate dateStart = LocalDate.parse("2001-12-01");
+		LocalDate dateEnd = LocalDate.now();
 
-			List<RateData> rateData;
-			LocalDate dateStart = LocalDate.parse("2001-12-01");
-			LocalDate dateEnd = LocalDate.now();
+		rateData = api.getListOfRatesForCurrencies(dateStart, dateEnd);
 
-			rateData = api.getListOfRatesForCurrency(code, dateStart, dateEnd);
-
-			if (rateData != null) {
-				System.out.println(rateData.size() + " -- " + code);
-				sql.saveRateDataListToSql(rateData);
-			} else {
-				System.out.println("null --- " + code);
-			}
-
+		if (rateData != null) {
+			System.out.println(rateData.size() + " -- zapis");
+			sql.saveRateDataListToSql(rateData);
+		} else {
+			System.out.println("null --- ");
 		}
+
 	}
 
 	private void saveRateData(RateData rateData) {

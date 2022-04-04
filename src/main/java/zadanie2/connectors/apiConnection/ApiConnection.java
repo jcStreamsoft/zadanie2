@@ -8,8 +8,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import zadanie2.enums.CurrencyCode;
@@ -72,11 +73,27 @@ public class ApiConnection implements DataConnection {
 				.collect(Collectors.joining());
 	}
 
-	public List<RateData> getListOfRatesForCurrency(CurrencyCode code, LocalDate dateStart, LocalDate dateEnd)
+	public Set<RateData> getListOfRatesForCurrencies(LocalDate dateStart, LocalDate dateEnd)
+			throws ReadingRateDataException {
+		Set<RateData> allCurrencyRateData = new HashSet<>();
+		for (CurrencyCode code : CurrencyCode.values()) {
+			Set<RateData> currencyRateData = getListOfRatesForCurrency(code, dateStart, dateEnd);
+
+			if (currencyRateData != null) {
+				System.out.println(currencyRateData.size() + " --- " + code);
+				for (RateData r : currencyRateData) {
+					allCurrencyRateData.add(r);
+				}
+			}
+		}
+		return allCurrencyRateData;
+	}
+
+	public Set<RateData> getListOfRatesForCurrency(CurrencyCode code, LocalDate dateStart, LocalDate dateEnd)
 			throws ReadingRateDataException {
 		this.urlCreator = new UrlCreator(code.getCode(), parser.getFormatType());
 		try {
-			List<RateData> rateDataList = new LinkedList<>();
+			Set<RateData> rateDataList = new HashSet<>();
 			LocalDate currentDateStart = dateEnd;
 			LocalDate currentDateEnd = dateStart;
 			for (int i = 0; dateStart.compareTo(currentDateStart) < 0; i++) {
@@ -90,7 +107,7 @@ public class ApiConnection implements DataConnection {
 					List<Rate> rateList = parser.getRateList(result);
 
 					if (rateList.size() > 0) {
-						System.out.println(rateList.size());
+						// System.out.println(rateList.size());
 						for (Rate r : rateList) {
 							rateDataList.add(new RateData(r.getEffectiveDate(), r.getMid(), code));
 						}
@@ -98,7 +115,7 @@ public class ApiConnection implements DataConnection {
 
 				}
 			}
-			System.out.println(rateDataList.size() + " -- " + code.getCode());
+			// System.out.println(rateDataList.size() + " -- " + code.getCode());
 			return rateDataList;
 		} catch (IOException | CreatingURLException e) {
 			throw new ReadingRateDataException("Blad przy połczeniu z NBP ", e);
