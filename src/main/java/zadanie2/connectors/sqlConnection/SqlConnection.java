@@ -4,9 +4,13 @@ import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
 import zadanie2.daos.CurrencyDao;
 import zadanie2.daos.RateDao;
-import zadanie2.daos.SessionCreator;
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.daoExceptions.DaoException;
@@ -23,15 +27,15 @@ public class SqlConnection implements DataConnection {
 	private CurrencyDao currencyDao;
 
 	public SqlConnection() {
-		SessionCreator sessionCreator;
-		try {
-			sessionCreator = new SessionCreator();
-			this.currencyDao = new CurrencyDao(sessionCreator);
-			this.rateDao = new RateDao(sessionCreator);
-		} catch (CreatingSessionException e) {
-			this.currencyDao = null;
-			this.rateDao = null;
-		}
+		SessionFactory sessionFactory = createSessionFactory();
+		this.currencyDao = new CurrencyDao(sessionFactory);
+		this.rateDao = new RateDao(sessionFactory);
+	}
+
+	private SessionFactory createSessionFactory() {
+		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+		SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+		return sessionFactory;
 	}
 
 	@Override

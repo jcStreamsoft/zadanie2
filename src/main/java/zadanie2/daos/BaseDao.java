@@ -2,14 +2,16 @@ package zadanie2.daos;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+
 import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.interfaces.daos.Dao;
 
 public abstract class BaseDao<T> implements Dao<T> {
-	protected SessionCreator sessionCreator;
+	protected SessionFactory sessionFactory;
 
-	public BaseDao(SessionCreator sessionCreator) {
-		this.sessionCreator = sessionCreator;
+	public BaseDao(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 	@Override
