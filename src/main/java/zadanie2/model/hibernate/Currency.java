@@ -1,9 +1,13 @@
 package zadanie2.model.hibernate;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @org.hibernate.annotations.NamedNativeQueries({
@@ -12,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "Currency")
 public class Currency {
 	// NAMED NATIVE QUEIRES
-	public static final String GET_MOST_CHANGED_BETWEEN_DATES = "Currency_findMostChangedRateBetweenDates";
+	public static final String GET_MOST_CHANGED_BETWEEN_DATES = "findMostChangedRateBetweenDates";
 	static final String GET_MOST_CHANGED_BETWEEN_DATES_QUERY = "SELECT (max(r.value)- min(r.value)) as wynik , c.currency_code\r\n"
 			+ "	from rate r join currency c on c.currency_id = r.currency_id where r.date between :dateStart AND :dateEnd group by  c.currency_code\r\n"
 			+ "	order by wynik desc	limit 1";
@@ -23,6 +27,9 @@ public class Currency {
 
 	@Column(name = "currency_code")
 	private String code;
+
+	@ManyToMany(mappedBy = "currencies")
+	private Set<Country> countries = new HashSet<>();
 
 	public Currency() {
 		super();
@@ -42,6 +49,22 @@ public class Currency {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public Set<Country> getCountries() {
+		return countries;
+	}
+
+	public void setCountries(Set<Country> countries) {
+		this.countries = countries;
+	}
+
+	public void addCurrency(Country country) {
+		this.countries.add(country);
+	}
+
+	public void removeCurrency(Country country) {
+		this.countries.remove(country);
 	}
 
 	@Override

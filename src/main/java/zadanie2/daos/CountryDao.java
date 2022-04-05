@@ -64,7 +64,7 @@ public class CountryDao extends BaseDao<Country> {
 			Query query = session.createQuery(
 					"update Country set country_name =:country_name, currency_id = :currency_id  where country_id = :id");
 			query.setParameter("country_name", t.getName());
-			query.setParameter("country_name", t.getCurrency().getId());
+			// query.setParameter("country_name", t.getCurrency().getId());
 			query.setParameter("id", id);
 			query.executeUpdate();
 			session.getTransaction().commit();
@@ -88,6 +88,22 @@ public class CountryDao extends BaseDao<Country> {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+		}
+	}
+
+	public void findCountriesWithMoreThanTwoCurrencies() throws DaoException {
+		try (Session session = sessionFactory.openSession()) {
+			session.beginTransaction();
+			Query query = session.getNamedNativeQuery(Country.FIND_COUNTRIES_WITH_MORE_CURRENCIES);
+			// List<Country> list = query.list();
+			List<Object[]> result = query.list();
+			for (Object[] x : result) {
+				System.out.println(x[1] + " -- " + x[0]);
+			}
+
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

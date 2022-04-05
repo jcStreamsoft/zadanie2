@@ -55,7 +55,7 @@ INSERT INTO currency(currency_code) Values('MTL');
 INSERT INTO currency(currency_code) Values('LTL'); 
 INSERT INTO currency(currency_code) Values('SIT');
 
-INSERT INTO country(country_name,currency_id) Values('Niemcy',1);
-INSERT INTO country(country_name,currency_id) Values('Stany Zjednoczone',2);
+INSERT INTO country(country_name) Values('Niemcy');
+INSERT INTO country(country_name) Values('Stany Zjednoczone');
 INSERT INTO Rate(value,date,currency_id) Values('4.4753','2012-01-04',1);
 

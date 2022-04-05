@@ -48,3 +48,11 @@ currency_id INT NOT NULL,
 FOREIGN KEY (currency_id) REFERENCES Currency(currency_id)
 );
 
+CREATE TABLE country_currency (
+country_currency_id SERIAL PRIMARY KEY,
+country_id INT NOT NULL,
+
+currency_id INT NOT NULL,
+FOREIGN KEY (country_id) REFERENCES Country(country_id),
+FOREIGN KEY (currency_id) REFERENCES Currency(currency_id)
+);

@@ -16,23 +16,28 @@ import javax.persistence.UniqueConstraint;
 		@org.hibernate.annotations.NamedQuery(name = Rate.GET_BY_ID, query = Rate.GET_BY_ID_QUERY),
 		@org.hibernate.annotations.NamedQuery(name = Rate.GET_MAX_BETWEEN_DATES, query = Rate.GET_MAX_BETWEEN_DATES_QUERY),
 		@org.hibernate.annotations.NamedQuery(name = Rate.GET_MIN_BETWEEN_DATES, query = Rate.GET_MIN_BETWEEN_DATES_QUERY),
+		@org.hibernate.annotations.NamedQuery(name = Rate.GET_NUMBER_TOP_RATES_FOR_CURRENCY, query = Rate.GET_NUMBER_TOP_RATES_FOR_CURRENCY_QUERY),
+		@org.hibernate.annotations.NamedQuery(name = Rate.GET_NUMBER_BOTTOM_RATES_FOR_CURRENCY, query = Rate.GET_NUMBER_BOTTOM_RATES_FOR_CURRENCY_QUERY),
 		@org.hibernate.annotations.NamedQuery(name = Rate.GET_BY_DATE_AND_CURRENCY_ID, query = Rate.GET_BY_DATE_AND_CURRENCY_ID_QUERY) })
 
 @Entity
 @Table(name = "Rate", uniqueConstraints = {
 		@UniqueConstraint(name = "UniqueDateCurrencyCode", columnNames = { "date", "currency_id" }) })
 public class Rate {
-	public static final String GET_BY_ID = "Rate_findById";
+	public static final String GET_BY_ID = "findById";
 	static final String GET_BY_ID_QUERY = "FROM Rate WHERE rate_id = :id";
-	public static final String GET_MAX_BETWEEN_DATES = "Rate_findMaxRateBetweenDates";
+	public static final String GET_MAX_BETWEEN_DATES = "findMaxRateBetweenDates";
 	static final String GET_MAX_BETWEEN_DATES_QUERY = "from Rate r where  (date between :dateStart AND :dateEnd ) AND currency_id = :id\r\n"
 			+ "	AND r.value =(select max(value) from Rate where (date between :dateStart1 AND :dateEnd1 ) AND currency_id = :id1)";
-	public static final String GET_MIN_BETWEEN_DATES = "Rate_findMinRateBetweenDates";
+	public static final String GET_MIN_BETWEEN_DATES = "findMinRateBetweenDates";
 	static final String GET_MIN_BETWEEN_DATES_QUERY = "from Rate r	where  (date between :dateStart AND :dateEnd ) AND currency_id = :id\r\n"
 			+ "	AND r.value =(select min(value) from Rate where (date between :dateStart1 AND :dateEnd1 ) AND currency_id = :id1)";
-	public static final String GET_BY_DATE_AND_CURRENCY_ID = "Rate_findByCurrencyIdAndDate";
+	public static final String GET_BY_DATE_AND_CURRENCY_ID = "findByCurrencyIdAndDate";
 	static final String GET_BY_DATE_AND_CURRENCY_ID_QUERY = "from Rate where currency_id = :id AND date = :date";
-
+	public static final String GET_NUMBER_TOP_RATES_FOR_CURRENCY = "getTopRatesForCurrency";
+	static final String GET_NUMBER_TOP_RATES_FOR_CURRENCY_QUERY = "from Rate  where currency_id = :id ORDER BY  value desc";
+	public static final String GET_NUMBER_BOTTOM_RATES_FOR_CURRENCY = "getBottomRatesForCurrency";
+	static final String GET_NUMBER_BOTTOM_RATES_FOR_CURRENCY_QUERY = "from Rate  where currency_id = :id ORDER BY  value asc";
 	@Id
 	@GeneratedValue
 	@Column(name = "rate_id")
@@ -50,7 +55,6 @@ public class Rate {
 
 	public Rate(BigDecimal value, LocalDate date, Currency currency) {
 		super();
-
 		this.value = value;
 		this.date = date;
 		this.currency = currency;

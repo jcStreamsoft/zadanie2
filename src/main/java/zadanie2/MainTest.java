@@ -1,17 +1,15 @@
 package zadanie2;
 
-import java.time.LocalDate;
-
 import org.hibernate.SessionFactory;
 
 import zadanie2.connectors.apiConnection.ApiConnection;
 import zadanie2.connectors.sqlConnection.SqlConnection;
+import zadanie2.daos.CountryDao;
 import zadanie2.daos.CurrencyDao;
 import zadanie2.daos.RateDao;
 import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.model.hibernate.Currency;
-import zadanie2.model.hibernate.Rate;
 import zadanie2.parsers.apiParsers.ApiJsonParser;
 
 public class MainTest {
@@ -28,12 +26,16 @@ public class MainTest {
 		SessionFactory sessionFactory = SqlConnection.createSessionFactory();
 		RateDao rateDao = new RateDao(sessionFactory);
 		CurrencyDao curDao = new CurrencyDao(sessionFactory);
-		Currency currency = curDao.get(1);
+		CountryDao couDao = new CountryDao(sessionFactory);
+		Currency currency = curDao.get(2);
 		// rateDao.save(new Rate(new BigDecimal("10.0"), LocalDate.parse("2022-03-31"),
 		// currency));
-		Rate rate = rateDao.findMinRateBetweenDates(LocalDate.parse("2012-01-01"), LocalDate.parse("2012-01-05"),
-				currency);
-		curDao.findMostChangedCurrencyBetweenDates(LocalDate.parse("2012-01-01"), LocalDate.parse("2012-01-05"));
-		System.out.println(rate.toString());
+
+		// List<Rate> rates = rateDao.getBottomRates(5, currency);
+		couDao.findCountriesWithMoreThanTwoCurrencies();
+		System.out.println("wow");
+		// curDao.findMostChangedCurrencyBetweenDates(LocalDate.parse("2012-01-01"),
+		// LocalDate.parse("2012-01-05"));
+		// System.out.println(rates.toString());
 	}
 }
