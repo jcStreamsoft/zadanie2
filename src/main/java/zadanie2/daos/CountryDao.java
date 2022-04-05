@@ -91,19 +91,15 @@ public class CountryDao extends BaseDao<Country> {
 		}
 	}
 
-	public void findCountriesWithMoreThanTwoCurrencies() throws DaoException {
+	public List<Country> findCountriesWithMoreThanTwoCurrencies() throws DaoException {
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
-			Query query = session.getNamedNativeQuery(Country.FIND_COUNTRIES_WITH_MORE_CURRENCIES);
-			// List<Country> list = query.list();
-			List<Object[]> result = query.list();
-			for (Object[] x : result) {
-				System.out.println(x[1] + " -- " + x[0]);
-			}
-
+			Query query = session.getNamedQuery(Country.FIND_COUNTRIES_WITH_MORE_CURRENCIES);
+			List<Country> result = query.list();
 			session.getTransaction().commit();
+			return result;
 		} catch (Exception e) {
-			e.printStackTrace();
+			return null;
 		}
 	}
 }
