@@ -19,7 +19,7 @@
   		<property name="format_sql">true</property>
         <!-- Update database on startup -->
         <property name="hibernate.hbm2ddl.auto">update</property>
-  
+  		<property name="hibernate.jdbc.batch_size">5</property>
         <!-- Annotated entity classes -->
 	   <mapping class="zadanie2.model.hibernate.Country" />
 		<mapping class="zadanie2.model.hibernate.Rate" />

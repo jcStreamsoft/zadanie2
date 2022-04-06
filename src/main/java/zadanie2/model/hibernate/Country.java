@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,7 +27,7 @@ public class Country implements Serializable {
 	public static final String FIND_COUNTRIES_WITH_MORE_CURRENCIES = "findCountriesWithMoreCurrencies";
 	static final String FIND_COUNTRIES_WITH_MORE_CURRENCIES_QUERY = "from Country country  where size(country.currencies)>=2";
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "country_id")
 	private long id;
 

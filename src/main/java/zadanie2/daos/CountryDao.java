@@ -61,12 +61,11 @@ public class CountryDao extends BaseDao<Country> {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
-			Query query = session.createQuery(
-					"update Country set country_name =:country_name, currency_id = :currency_id  where country_id = :id");
-			query.setParameter("country_name", t.getName());
-			// query.setParameter("country_name", t.getCurrency().getId());
-			query.setParameter("id", id);
-			query.executeUpdate();
+			Country updatedCountry = new Country();
+			updatedCountry.setId(id);
+			updatedCountry.setName(t.getName());
+
+			session.update(updatedCountry);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			if (transaction != null) {

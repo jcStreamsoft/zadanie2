@@ -63,14 +63,12 @@ public class RateDao extends BaseDao<Rate> {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
-			Query query = session.createQuery(
-					"update Rate set value=:value , date = :date , currency_id = :currency_id where rate_id = :id");
-			query.setParameter("value", t.getValue());
-			query.setParameter("date", t.getValue());
-			query.setParameter("currency_id", t.getCurrency().getId());
-			query.setParameter("id", id);
-			query.executeUpdate();
-
+			Rate updatedRate = new Rate();
+			updatedRate.setId(id);
+			updatedRate.setValue(t.getValue());
+			updatedRate.setDate(t.getDate());
+			updatedRate.setCurrency(t.getCurrency());
+			session.update(updatedRate);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			if (transaction != null) {
@@ -111,13 +109,10 @@ public class RateDao extends BaseDao<Rate> {
 	}
 
 	public void saveRateList(Set<Rate> rateList) {
-		int count = 0;
+
 		for (Rate rate : rateList) {
 			save(rate);
-			count++;
-			if (count % 10_000 == 0) {
-				System.out.println(count + " -- zapisano ");
-			}
+
 		}
 	}
 
@@ -126,13 +121,10 @@ public class RateDao extends BaseDao<Rate> {
 			session.beginTransaction();
 
 			Query query = session.getNamedQuery(Rate.GET_MAX_BETWEEN_DATES);
+			query.setMaxResults(1);
 			query.setParameter("dateStart", dateStart);
 			query.setParameter("dateEnd", dateEnd);
 			query.setParameter("id", currency.getId());
-			query.setParameter("dateStart1", dateStart);
-			query.setParameter("dateEnd1", dateEnd);
-			query.setParameter("id1", currency.getId());
-
 			Rate rate = (Rate) query.uniqueResult();
 			session.getTransaction().commit();
 			return rate;
@@ -145,12 +137,10 @@ public class RateDao extends BaseDao<Rate> {
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
 			Query query = session.getNamedQuery(Rate.GET_MIN_BETWEEN_DATES);
+			query.setMaxResults(1);
 			query.setParameter("dateStart", dateStart);
 			query.setParameter("dateEnd", dateEnd);
 			query.setParameter("id", currency.getId());
-			query.setParameter("dateStart1", dateStart);
-			query.setParameter("dateEnd1", dateEnd);
-			query.setParameter("id1", currency.getId());
 			Rate rate = (Rate) query.uniqueResult();
 			session.getTransaction().commit();
 			return rate;

@@ -1,5 +1,7 @@
 package zadanie2;
 
+import java.time.LocalDate;
+
 import org.hibernate.SessionFactory;
 
 import zadanie2.connectors.apiConnection.ApiConnection;
@@ -27,15 +29,14 @@ public class MainTest {
 		RateDao rateDao = new RateDao(sessionFactory);
 		CurrencyDao curDao = new CurrencyDao(sessionFactory);
 		CountryDao couDao = new CountryDao(sessionFactory);
-		Currency currency = curDao.get(2);
+		Currency currency = curDao.get(1);
 		// rateDao.save(new Rate(new BigDecimal("10.0"), LocalDate.parse("2022-03-31"),
 		// currency));
 
 		// List<Rate> rates = rateDao.getBottomRates(5, currency);
-		couDao.findCountriesWithMoreThanTwoCurrencies();
-		System.out.println("wow");
-		// curDao.findMostChangedCurrencyBetweenDates(LocalDate.parse("2012-01-01"),
-		// LocalDate.parse("2012-01-05"));
+		// couDao.findCountriesWithMoreThanTwoCurrencies();
+		curDao.findMostChangedCurrencyBetweenDates(LocalDate.parse("2009-01-01"), LocalDate.parse("2015-01-01"));
+
 		// System.out.println(rates.toString());
 	}
 }

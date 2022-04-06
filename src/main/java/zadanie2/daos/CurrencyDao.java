@@ -108,22 +108,25 @@ public class CurrencyDao extends BaseDao<Currency> {
 		}
 	}
 
-	public Currency findMostChangedCurrencyBetweenDates(LocalDate dateStart, LocalDate dateEnd) {
+	public void findMostChangedCurrencyBetweenDates(LocalDate dateStart, LocalDate dateEnd) throws DaoException {
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
 
-			Query query = session.getNamedNativeQuery(Currency.GET_MOST_CHANGED_BETWEEN_DATES);
+			Query query = session.getNamedQuery(Currency.GET_MOST_CHANGED_BETWEEN_DATES);
+			query.setMaxResults(1);
 			query.setParameter("dateStart", dateStart);
 			query.setParameter("dateEnd", dateEnd);
 
-			Object[] result = (Object[]) query.uniqueResult();
-			System.out.println(result[1] + " -- " + result[0]);
-			String code = result[1].toString();
-			Currency currency = getByCurrencyCode(CurrencyCode.valueOf(code));
+			Currency result = (Currency) query.uniqueResult();
+			System.out.println(result.toString());
+//			for (Currency x : result) {
+//				System.out.println(x.toString());
+//			}
+
 			session.getTransaction().commit();
-			return currency;
+
 		} catch (Exception e) {
-			return null;
+			throw new DaoException("Blad przy wyszukiwaniu kursu o najwiekszej roznicy", e);
 		}
 	}
 }
