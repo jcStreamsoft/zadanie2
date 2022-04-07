@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import zadanie2.connectors.sqlConnection.HibernateFactory;
 import zadanie2.interfaces.daos.Dao;
 import zadanie2.model.hibernate.Currency;
 import zadanie2.model.hibernate.Rate;
@@ -17,8 +18,8 @@ import zadanie2.model.hibernate.Rate;
 public class RateDao implements Dao<Rate> {
 	protected SessionFactory sessionFactory;
 
-	public RateDao(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	public RateDao(HibernateFactory hibernateFactory) {
+		this.sessionFactory = hibernateFactory.getSessionFactory();
 	}
 
 	@Override

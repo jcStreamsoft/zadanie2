@@ -7,18 +7,23 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
+import zadanie2.connectors.sqlConnection.HibernateFactory;
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.interfaces.daos.Dao;
 import zadanie2.model.hibernate.Currency;
 import zadanie2.model.hibernate.Rate;
 
+@Repository
 public class CurrencyDao implements Dao<Currency> {
 	protected SessionFactory sessionFactory;
+	private HibernateFactory hibernateFactory;
 
-	public CurrencyDao(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	public CurrencyDao(HibernateFactory hibernateFactory) {
+		this.hibernateFactory = hibernateFactory;
+		this.sessionFactory = hibernateFactory.getSessionFactory();
 	}
 
 	@Override

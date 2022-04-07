@@ -2,9 +2,8 @@ package zadanie2;
 
 import java.time.LocalDate;
 
-import org.hibernate.SessionFactory;
-
 import zadanie2.connectors.apiConnection.ApiConnection;
+import zadanie2.connectors.sqlConnection.HibernateFactory;
 import zadanie2.connectors.sqlConnection.SqlConnection;
 import zadanie2.daos.CountryDao;
 import zadanie2.daos.CurrencyDao;
@@ -27,10 +26,10 @@ public class MainTest {
 	}
 
 	public static void test2() throws CreatingSessionException, DaoException {
-		SessionFactory sessionFactory = HibernateFactory.createSessionFactory();
-		RateDao rateDao = new RateDao(sessionFactory);
-		CurrencyDao curDao = new CurrencyDao(sessionFactory);
-		CountryDao couDao = new CountryDao(sessionFactory);
+		HibernateFactory hibernateFactory = new HibernateFactory();
+		RateDao rateDao = new RateDao(hibernateFactory);
+		CurrencyDao curDao = new CurrencyDao(hibernateFactory);
+		CountryDao couDao = new CountryDao(hibernateFactory);
 		Currency currency = curDao.get(1);
 		// rateDao.save(new Rate(new BigDecimal("10.0"), LocalDate.parse("2022-03-31"),
 		// currency));

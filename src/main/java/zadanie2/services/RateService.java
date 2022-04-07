@@ -12,9 +12,20 @@ public class RateService {
 
 	@Autowired
 	private Dao<Rate> rateDao;
-	private Rate rate = new Rate();
 
-	public Rate get() throws DaoException {
-		return rateDao.get(36795);
+	public Rate get(long id) throws DaoException {
+		return rateDao.get(id);
+	}
+
+	public void deleteById(long id) throws DaoException {
+		rateDao.deleteById(id);
+	}
+
+	public void save(Rate rate) throws DaoException {
+		rateDao.save(rate);
+	}
+
+	public void update(long id, Rate rate) throws DaoException {
+		rateDao.update(id, rate);
 	}
 }

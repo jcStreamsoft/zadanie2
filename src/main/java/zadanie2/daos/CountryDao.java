@@ -6,17 +6,20 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
+import zadanie2.connectors.sqlConnection.HibernateFactory;
 import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.interfaces.daos.Dao;
 import zadanie2.model.hibernate.Country;
 
+@Repository
 public class CountryDao implements Dao<Country> {
 
 	protected SessionFactory sessionFactory;
 
-	public CountryDao(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	public CountryDao(HibernateFactory hibernateFactory) {
+		this.sessionFactory = hibernateFactory.getSessionFactory();
 	}
 
 	@Override

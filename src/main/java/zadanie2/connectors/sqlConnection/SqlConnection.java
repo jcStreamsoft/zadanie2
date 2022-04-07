@@ -5,9 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import zadanie2.HibernateFactory;
 import zadanie2.daos.CurrencyDao;
 import zadanie2.daos.RateDao;
 import zadanie2.enums.CurrencyCode;
@@ -24,11 +23,13 @@ import zadanie2.model.hibernate.Rate;
 public class SqlConnection implements DataConnection {
 	private RateDao rateDao;
 	private CurrencyDao currencyDao;
+	@Autowired
+	private HibernateFactory hibernateFactory;
 
 	public SqlConnection(HibernateFactory hibernateFactory) {
-		SessionFactory sessionFactory = hibernateFactory.createSessionFactory();
-		this.currencyDao = new CurrencyDao(sessionFactory);
-		this.rateDao = new RateDao(sessionFactory);
+		this.hibernateFactory = hibernateFactory;
+		this.currencyDao = new CurrencyDao(hibernateFactory);
+		this.rateDao = new RateDao(hibernateFactory);
 	}
 
 	@Override
