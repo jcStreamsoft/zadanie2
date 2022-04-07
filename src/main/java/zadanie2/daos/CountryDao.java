@@ -8,12 +8,15 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import zadanie2.exceptions.daoExceptions.DaoException;
+import zadanie2.interfaces.daos.Dao;
 import zadanie2.model.hibernate.Country;
 
-public class CountryDao extends BaseDao<Country> {
+public class CountryDao implements Dao<Country> {
+
+	protected SessionFactory sessionFactory;
 
 	public CountryDao(SessionFactory sessionFactory) {
-		super(sessionFactory);
+		this.sessionFactory = sessionFactory;
 	}
 
 	@Override

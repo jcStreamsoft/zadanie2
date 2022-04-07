@@ -1,4 +1,4 @@
-package zadanie2;
+package zadanie2.exchanger;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

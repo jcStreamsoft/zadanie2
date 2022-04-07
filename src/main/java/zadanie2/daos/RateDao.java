@@ -7,14 +7,18 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
+import zadanie2.interfaces.daos.Dao;
 import zadanie2.model.hibernate.Currency;
 import zadanie2.model.hibernate.Rate;
 
-public class RateDao extends BaseDao<Rate> {
+@Repository
+public class RateDao implements Dao<Rate> {
+	protected SessionFactory sessionFactory;
 
 	public RateDao(SessionFactory sessionFactory) {
-		super(sessionFactory);
+		this.sessionFactory = sessionFactory;
 	}
 
 	@Override

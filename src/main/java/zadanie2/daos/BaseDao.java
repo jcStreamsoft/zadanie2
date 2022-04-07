@@ -2,17 +2,13 @@ package zadanie2.daos;
 
 import java.util.List;
 
-import org.hibernate.SessionFactory;
+import org.springframework.context.annotation.Configuration;
 
 import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.interfaces.daos.Dao;
 
+@Configuration
 public abstract class BaseDao<T> implements Dao<T> {
-	protected SessionFactory sessionFactory;
-
-	public BaseDao(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
 
 	@Override
 	public T get(long id) throws DaoException {

@@ -8,11 +8,11 @@ import java.time.LocalDate;
 
 import org.testng.annotations.Test;
 
-import zadanie2.InputValidator;
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.inputExceptions.DateAfterTodayException;
 import zadanie2.exceptions.inputExceptions.DateBeforeFirstException;
 import zadanie2.exceptions.inputExceptions.NegativeValueException;
+import zadanie2.exchanger.InputValidator;
 import zadanie2.model.Request;
 
 public class InputValidatorTest {

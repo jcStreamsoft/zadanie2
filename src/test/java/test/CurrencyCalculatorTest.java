@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import org.testng.annotations.Test;
 
-import zadanie2.CurrencyCalculator;
+import zadanie2.exchanger.CurrencyCalculator;
 
 public class CurrencyCalculatorTest {
 

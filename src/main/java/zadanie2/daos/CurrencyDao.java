@@ -10,12 +10,15 @@ import org.hibernate.query.Query;
 
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.daoExceptions.DaoException;
+import zadanie2.interfaces.daos.Dao;
 import zadanie2.model.hibernate.Currency;
 import zadanie2.model.hibernate.Rate;
 
-public class CurrencyDao extends BaseDao<Currency> {
+public class CurrencyDao implements Dao<Currency> {
+	protected SessionFactory sessionFactory;
+
 	public CurrencyDao(SessionFactory sessionFactory) {
-		super(sessionFactory);
+		this.sessionFactory = sessionFactory;
 	}
 
 	@Override

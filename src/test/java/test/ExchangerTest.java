@@ -13,13 +13,13 @@ import java.util.List;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import zadanie2.Exchanger;
 import zadanie2.connectors.CachedConnection;
 import zadanie2.connectors.apiConnection.ApiConnection;
 import zadanie2.connectors.fileConnection.FileConnection;
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.ExchangerException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
+import zadanie2.exchanger.Exchanger;
 import zadanie2.interfaces.DataConnection;
 import zadanie2.model.RateData;
 import zadanie2.model.Request;

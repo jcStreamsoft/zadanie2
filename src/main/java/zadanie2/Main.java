@@ -8,6 +8,7 @@ import zadanie2.connectors.apiConnection.ApiConnection;
 import zadanie2.connectors.fileConnection.FileConnection;
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.CreatingSessionException;
+import zadanie2.exchanger.Exchanger;
 import zadanie2.interfaces.DataConnection;
 import zadanie2.model.Request;
 import zadanie2.parsers.apiParsers.ApiJsonParser;

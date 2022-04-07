@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import zadanie2.HibernateFactory;
 import zadanie2.daos.CurrencyDao;
 import zadanie2.daos.RateDao;
 import zadanie2.enums.CurrencyCode;
@@ -27,16 +25,10 @@ public class SqlConnection implements DataConnection {
 	private RateDao rateDao;
 	private CurrencyDao currencyDao;
 
-	public SqlConnection() {
-		SessionFactory sessionFactory = createSessionFactory();
+	public SqlConnection(HibernateFactory hibernateFactory) {
+		SessionFactory sessionFactory = hibernateFactory.createSessionFactory();
 		this.currencyDao = new CurrencyDao(sessionFactory);
 		this.rateDao = new RateDao(sessionFactory);
-	}
-
-	public static SessionFactory createSessionFactory() {
-		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-		SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-		return sessionFactory;
 	}
 
 	@Override

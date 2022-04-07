@@ -11,6 +11,7 @@ import zadanie2.daos.CurrencyDao;
 import zadanie2.daos.RateDao;
 import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.daoExceptions.DaoException;
+import zadanie2.exchanger.Exchanger;
 import zadanie2.model.hibernate.Currency;
 import zadanie2.parsers.apiParsers.ApiJsonParser;
 
@@ -21,11 +22,12 @@ public class MainTest {
 	}
 
 	public static void test1() throws Exception {
-		Exchanger.saveRatesFormApiToSql(new ApiConnection(new ApiJsonParser()), new SqlConnection());
+		Exchanger.saveRatesFormApiToSql(new ApiConnection(new ApiJsonParser()),
+				new SqlConnection(new HibernateFactory()));
 	}
 
 	public static void test2() throws CreatingSessionException, DaoException {
-		SessionFactory sessionFactory = SqlConnection.createSessionFactory();
+		SessionFactory sessionFactory = HibernateFactory.createSessionFactory();
 		RateDao rateDao = new RateDao(sessionFactory);
 		CurrencyDao curDao = new CurrencyDao(sessionFactory);
 		CountryDao couDao = new CountryDao(sessionFactory);
