@@ -1,7 +1,8 @@
 package zadanie2.connectors.sqlConnection;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.SessionFactory;
@@ -78,12 +79,12 @@ public class SqlConnection implements DataConnection {
 		}
 	}
 
-	public void saveRateDataListToSql(Set<RateData> rateDataList) throws DaoException, CreatingSessionException {
+	public void saveRateDataListToSql(Set<RateData> rateDataList, CurrencyCode currencyCode)
+			throws DaoException, CreatingSessionException {
 
-		Set<Rate> rateList = new LinkedHashSet<>();
+		List<Rate> rateList = new LinkedList<>();
+		Currency currency = currencyDao.getByCurrencyCode(currencyCode);
 		for (RateData r : rateDataList) {
-
-			Currency currency = currencyDao.getByCurrencyCode(r.getCurrencyCode());
 			if (currency != null) {
 				rateList.add(new Rate(r.getRate(), r.getDate(), currency));
 			}

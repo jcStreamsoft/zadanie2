@@ -19,7 +19,8 @@ import javax.persistence.UniqueConstraint;
 		@org.hibernate.annotations.NamedQuery(name = Rate.GET_MIN_BETWEEN_DATES, query = Rate.GET_MIN_BETWEEN_DATES_QUERY),
 		@org.hibernate.annotations.NamedQuery(name = Rate.GET_NUMBER_TOP_RATES_FOR_CURRENCY, query = Rate.GET_NUMBER_TOP_RATES_FOR_CURRENCY_QUERY),
 		@org.hibernate.annotations.NamedQuery(name = Rate.GET_NUMBER_BOTTOM_RATES_FOR_CURRENCY, query = Rate.GET_NUMBER_BOTTOM_RATES_FOR_CURRENCY_QUERY),
-		@org.hibernate.annotations.NamedQuery(name = Rate.GET_BY_DATE_AND_CURRENCY_ID, query = Rate.GET_BY_DATE_AND_CURRENCY_ID_QUERY) })
+		@org.hibernate.annotations.NamedQuery(name = Rate.GET_BY_DATE_AND_CURRENCY_ID, query = Rate.GET_BY_DATE_AND_CURRENCY_ID_QUERY),
+		@org.hibernate.annotations.NamedQuery(name = Rate.GET_MOST_CHANGED_CURRENCY_ID_BETWEEN_DATES, query = Rate.GET_MOST_CHANGED_CURRENCY_ID_BETWEEN_DATES_QUERY) })
 
 @Entity
 @Table(name = "Rate", uniqueConstraints = {
@@ -37,6 +38,9 @@ public class Rate {
 	static final String GET_NUMBER_TOP_RATES_FOR_CURRENCY_QUERY = "from Rate  where currency_id = :id ORDER BY  value desc";
 	public static final String GET_NUMBER_BOTTOM_RATES_FOR_CURRENCY = "getBottomRatesForCurrency";
 	static final String GET_NUMBER_BOTTOM_RATES_FOR_CURRENCY_QUERY = "from Rate  where currency_id = :id ORDER BY  value asc";
+	public static final String GET_MOST_CHANGED_CURRENCY_ID_BETWEEN_DATES = "findMostChangedRateBetweenDates";
+	static final String GET_MOST_CHANGED_CURRENCY_ID_BETWEEN_DATES_QUERY = "from Rate r where r.date between :dateStart AND :dateEnd group by  r.currency.id "
+			+ "order by (max(r.value)- min(r.value)) desc";
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "rate_id")

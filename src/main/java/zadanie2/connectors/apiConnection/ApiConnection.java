@@ -94,27 +94,20 @@ public class ApiConnection implements DataConnection {
 		this.urlCreator = new UrlCreator(code.getCode(), parser.getFormatType());
 		try {
 			Set<RateData> rateDataList = new HashSet<>();
-			LocalDate currentDateStart = dateEnd;
-			LocalDate currentDateEnd = dateStart;
-			for (int i = 0; dateStart.compareTo(currentDateStart) < 0; i++) {
-				currentDateStart = dateEnd.minusMonths(i * 8);
-				currentDateEnd = dateEnd.minusMonths((i + 1) * 8);
+			if (connectionExitst(urlCreator.createUrlForRatesInterval(dateStart, dateEnd))) {
+				String result = createStringFromStream(connection.getInputStream());
+				connection.disconnect();
 
-				if (connectionExitst(urlCreator.createUrlForRatesInterval(currentDateEnd, currentDateStart))) {
-					String result = createStringFromStream(connection.getInputStream());
-					connection.disconnect();
+				List<Rate> rateList = parser.getRateList(result);
 
-					List<Rate> rateList = parser.getRateList(result);
-
-					if (rateList.size() > 0) {
-						// System.out.println(rateList.size());
-						for (Rate r : rateList) {
-							rateDataList.add(new RateData(r.getEffectiveDate(), r.getMid(), code));
-						}
+				if (rateList.size() > 0) {
+					// System.out.println(rateList.size());
+					for (Rate r : rateList) {
+						rateDataList.add(new RateData(r.getEffectiveDate(), r.getMid(), code));
 					}
-
 				}
 			}
+
 			// System.out.println(rateDataList.size() + " -- " + code.getCode());
 			return rateDataList;
 		} catch (IOException | CreatingURLException e) {

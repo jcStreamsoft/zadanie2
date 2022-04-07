@@ -12,18 +12,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @org.hibernate.annotations.NamedQueries({
-		@org.hibernate.annotations.NamedQuery(name = Currency.GET_MOST_CHANGED_BETWEEN_DATES, query = Currency.GET_MOST_CHANGED_BETWEEN_DATES_QUERY),
-		@org.hibernate.annotations.NamedQuery(name = Currency.GET_MOST_CHANGED_CURRENCY_ID_BETWEEBN_DATES, query = Currency.GET_MOST_CHANGED_BETWEEN_DATES_QUERY), })
+		@org.hibernate.annotations.NamedQuery(name = Currency.GET_CURRENCY_BY_ID, query = Currency.GET_CURRENCY_BY_ID_QUERY), })
 @Entity
 @Table(name = "Currency")
 public class Currency {
 	// NAMED NATIVE QUEIRES
-	public static final String GET_MOST_CHANGED_BETWEEN_DATES = "findMostChangedRateBetweenDates";
-	static final String GET_MOST_CHANGED_BETWEEN_DATES_QUERY = "from Currency c where c.id in\r\n"
-			+ "(SELECT    r.currency.id from Rate r  where r.date between :dateStart AND :dateEnd group by  r.currency.id\r\n"
-			+ "order by (max(r.value)- min(r.value)) desc)";
-	public static final String GET_MOST_CHANGED_CURRENCY_ID_BETWEEBN_DATES = "SELECT    r.currency.id from Rate r  where r.date between :dateStart AND :dateEnd group by  r.currency.id\\r\\n\"\r\n"
-			+ "			+ \"order by (max(r.value)- min(r.value)) desc";
+	public static final String GET_CURRENCY_BY_ID = "getCurrencyById";
+	static final String GET_CURRENCY_BY_ID_QUERY = "from Currency c where c.id = :id";
+
 //	static final String GET_MOST_CHANGED_BETWEEN_DATES_QUERY = "SELECT (max(r.value)- min(r.value)) as wynik , c.currency_code\r\n"
 //			+ "	from rate r join currency c on c.currency_id = r.currency_id where r.date between :dateStart AND :dateEnd group by  c.currency_code\r\n"
 //			+ "	order by wynik desc";

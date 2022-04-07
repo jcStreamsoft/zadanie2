@@ -2,7 +2,6 @@ package zadanie2.daos;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -108,11 +107,22 @@ public class RateDao extends BaseDao<Rate> {
 		}
 	}
 
-	public void saveRateList(Set<Rate> rateList) {
+	public void saveRateList(List<Rate> rateList) {
 
-		for (Rate rate : rateList) {
-			save(rate);
+		try (Session session = sessionFactory.openSession()) {
+			Transaction transaction = session.beginTransaction();
 
+			for (int i = 0; i < rateList.size(); i++) {
+				session.save(rateList.get(i));
+				if (i % 20 == 0) { // 20, same as the JDBC batch size
+					// flush a batch of inserts and release memory:
+					session.flush();
+					session.clear();
+				}
+			}
+			transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

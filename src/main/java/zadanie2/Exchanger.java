@@ -2,11 +2,13 @@ package zadanie2;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import zadanie2.connectors.apiConnection.ApiConnection;
 import zadanie2.connectors.sqlConnection.SqlConnection;
+import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.ExchangerException;
 import zadanie2.exceptions.RateNotFoundException;
@@ -92,16 +94,28 @@ public class Exchanger {
 			throws ReadingRateDataException, DaoException, CreatingSessionException {
 
 		Set<RateData> rateData;
-		LocalDate dateStart = LocalDate.parse("2001-12-01");
+		LocalDate dateStart = LocalDate.parse("2002-01-01");
 		LocalDate dateEnd = LocalDate.now();
+		LocalDate currentDateStart = dateEnd;
+		LocalDate currentDateEnd = dateStart;
 
-		rateData = api.getListOfRatesForCurrencies(dateStart, dateEnd);
+		for (CurrencyCode code : CurrencyCode.values()) {
+			Set<RateData> rateDataForCurrency = new LinkedHashSet<>();
+			for (int i = 0; i < 25; i++) {
+				// ustawienie daty
+				currentDateStart = dateEnd.minusYears(i);
+				currentDateEnd = dateEnd.minusYears(i + 1);
 
-		if (rateData != null) {
-			System.out.println(rateData.size() + " -- zapis");
-			sql.saveRateDataListToSql(rateData);
-		} else {
-			System.out.println("null --- ");
+				// wywolanie dla listy
+				rateData = api.getListOfRatesForCurrency(code, currentDateEnd, currentDateStart);
+				rateDataForCurrency.addAll(rateData);
+			}
+			if (rateDataForCurrency.size() > 0) {
+				System.out.println(rateDataForCurrency.size() + " -- zapis -- " + code.getCode());
+				sql.saveRateDataListToSql(rateDataForCurrency, code);
+			} else {
+				System.out.println("null --- ");
+			}
 		}
 
 	}

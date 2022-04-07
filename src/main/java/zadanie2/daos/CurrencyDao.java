@@ -11,6 +11,7 @@ import org.hibernate.query.Query;
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.model.hibernate.Currency;
+import zadanie2.model.hibernate.Rate;
 
 public class CurrencyDao extends BaseDao<Currency> {
 	public CurrencyDao(SessionFactory sessionFactory) {
@@ -112,11 +113,14 @@ public class CurrencyDao extends BaseDao<Currency> {
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
 
-			Query query = session.getNamedQuery(Currency.GET_MOST_CHANGED_BETWEEN_DATES);
+			Query query = session.getNamedQuery(Rate.GET_MOST_CHANGED_CURRENCY_ID_BETWEEN_DATES);
 			query.setMaxResults(1);
 			query.setParameter("dateStart", dateStart);
 			query.setParameter("dateEnd", dateEnd);
-
+			Rate rate = (Rate) query.uniqueResult();
+			System.out.println(rate.toString());
+			query = session.getNamedQuery(Currency.GET_CURRENCY_BY_ID);
+			query.setParameter("id", rate.getCurrency().getId());
 			Currency result = (Currency) query.uniqueResult();
 			System.out.println(result.toString());
 //			for (Currency x : result) {
@@ -126,7 +130,9 @@ public class CurrencyDao extends BaseDao<Currency> {
 			session.getTransaction().commit();
 
 		} catch (Exception e) {
-			throw new DaoException("Blad przy wyszukiwaniu kursu o najwiekszej roznicy", e);
+			e.printStackTrace();
+			// throw new DaoException("Blad przy wyszukiwaniu kursu o najwiekszej roznicy",
+			// e);
 		}
 	}
 }
