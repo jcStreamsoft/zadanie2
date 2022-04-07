@@ -13,8 +13,8 @@ import zadanie2.connectors.sqlConnection.SqlConnection;
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.CreatingSessionException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
-import zadanie2.model.RateData;
-import zadanie2.model.Request;
+import zadanie2.model.exchangerModels.RateData;
+import zadanie2.model.exchangerModels.Request;
 
 public class SqlConnectionTest {
 	HibernateFactory hibernateFactory;

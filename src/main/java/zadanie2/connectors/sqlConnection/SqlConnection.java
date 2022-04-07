@@ -15,8 +15,8 @@ import zadanie2.exceptions.daoExceptions.DaoException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.exceptions.dataConnectionExceptions.SavingRateDataException;
 import zadanie2.interfaces.DataConnection;
-import zadanie2.model.RateData;
-import zadanie2.model.Request;
+import zadanie2.model.exchangerModels.RateData;
+import zadanie2.model.exchangerModels.Request;
 import zadanie2.model.hibernate.Currency;
 import zadanie2.model.hibernate.Rate;
 

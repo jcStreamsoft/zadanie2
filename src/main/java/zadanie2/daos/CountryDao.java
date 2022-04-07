@@ -49,21 +49,23 @@ public class CountryDao implements Dao<Country> {
 	}
 
 	@Override
-	public void save(Country t) throws DaoException {
+	public Country save(Country t) throws DaoException {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
 			session.save(t);
 			session.getTransaction().commit();
+			return t;
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+			return null;
 		}
 	}
 
 	@Override
-	public void update(long id, Country t) throws DaoException {
+	public Country update(long id, Country t) throws DaoException {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
@@ -73,26 +75,30 @@ public class CountryDao implements Dao<Country> {
 
 			session.update(updatedCountry);
 			session.getTransaction().commit();
+			return get(id);
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+			return null;
 		}
 
 	}
 
 	@Override
-	public void deleteById(long id) throws DaoException {
+	public Country deleteById(long id) throws DaoException {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
 			Country country = get(id);
 			session.delete(country);
 			session.getTransaction().commit();
+			return country;
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+			return null;
 		}
 	}
 

@@ -10,9 +10,9 @@ public interface Dao<T> {
 
 	List<T> getAll() throws DaoException;
 
-	void save(T t) throws DaoException;
+	T save(T t) throws DaoException;
 
-	void update(long id, T t) throws DaoException;
+	T update(long id, T t) throws DaoException;
 
-	void deleteById(long id) throws DaoException;
+	T deleteById(long id) throws DaoException;
 }

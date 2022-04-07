@@ -20,8 +20,8 @@ import zadanie2.exceptions.inputExceptions.DateBeforeFirstException;
 import zadanie2.exceptions.inputExceptions.InputValueNullException;
 import zadanie2.exceptions.inputExceptions.NegativeValueException;
 import zadanie2.interfaces.DataConnection;
-import zadanie2.model.RateData;
-import zadanie2.model.Request;
+import zadanie2.model.exchangerModels.RateData;
+import zadanie2.model.exchangerModels.Request;
 
 public class Exchanger {
 	private List<DataConnection> dataConnections;

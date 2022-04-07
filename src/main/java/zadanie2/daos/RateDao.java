@@ -49,21 +49,23 @@ public class RateDao implements Dao<Rate> {
 	}
 
 	@Override
-	public void save(Rate t) {
+	public Rate save(Rate t) {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
 			session.save(t);
 			session.getTransaction().commit();
+			return t;
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+			return null;
 		}
 	}
 
 	@Override
-	public void update(long id, Rate t) {
+	public Rate update(long id, Rate t) {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
@@ -74,25 +76,29 @@ public class RateDao implements Dao<Rate> {
 			updatedRate.setCurrency(t.getCurrency());
 			session.update(updatedRate);
 			session.getTransaction().commit();
+			return get(id);
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+			return null;
 		}
 	}
 
 	@Override
-	public void deleteById(long id) {
+	public Rate deleteById(long id) {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
 			Rate rate = get(id);
 			session.delete(rate);
 			session.getTransaction().commit();
+			return rate;
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+			return null;
 		}
 	}
 

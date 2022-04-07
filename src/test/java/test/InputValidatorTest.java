@@ -13,7 +13,7 @@ import zadanie2.exceptions.inputExceptions.DateAfterTodayException;
 import zadanie2.exceptions.inputExceptions.DateBeforeFirstException;
 import zadanie2.exceptions.inputExceptions.NegativeValueException;
 import zadanie2.exchanger.InputValidator;
-import zadanie2.model.Request;
+import zadanie2.model.exchangerModels.Request;
 
 public class InputValidatorTest {
 

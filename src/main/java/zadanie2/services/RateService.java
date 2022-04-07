@@ -2,30 +2,47 @@ package zadanie2.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import zadanie2.daos.RateDao;
 import zadanie2.exceptions.daoExceptions.DaoException;
-import zadanie2.interfaces.daos.Dao;
+import zadanie2.model.dto.RateDto;
 import zadanie2.model.hibernate.Rate;
+import zadanie2.services.mappers.RateMapper;
 
 @Service
 public class RateService {
 
 	@Autowired
-	private Dao<Rate> rateDao;
+	private RateDao rateDao;
+	@Autowired
+	private RateMapper mapper;
 
-	public Rate get(long id) throws DaoException {
-		return rateDao.get(id);
+	@Transactional
+	public RateDto get(long id) throws DaoException {
+		Rate rate = rateDao.get(id);
+		RateDto rateDto = mapper.fromRateToRateDto(rate);
+		return rateDto;
 	}
 
-	public void deleteById(long id) throws DaoException {
-		rateDao.deleteById(id);
+	@Transactional
+	public RateDto deleteById(long id) throws DaoException {
+		Rate rate = rateDao.deleteById(id);
+		RateDto rateDto = mapper.fromRateToRateDto(rate);
+		return rateDto;
 	}
 
-	public void save(Rate rate) throws DaoException {
-		rateDao.save(rate);
+	@Transactional
+	public RateDto save(RateDto rateDto) throws DaoException {
+		Rate savedRate = rateDao.save(mapper.fromRateDtoToRate(rateDto));
+		RateDto savedRateDto = mapper.fromRateToRateDto(savedRate);
+		return savedRateDto;
 	}
 
-	public void update(long id, Rate rate) throws DaoException {
-		rateDao.update(id, rate);
+	@Transactional
+	public RateDto update(long id, RateDto rateDto) throws DaoException {
+		Rate updatedRate = rateDao.update(id, mapper.fromRateDtoToRate(rateDto));
+		RateDto updatedRateDto = mapper.fromRateToRateDto(updatedRate);
+		return updatedRateDto;
 	}
 }

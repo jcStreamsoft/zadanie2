@@ -11,8 +11,8 @@ import org.testng.annotations.Test;
 import zadanie2.connectors.CachedConnection;
 import zadanie2.enums.CurrencyCode;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
-import zadanie2.model.RateData;
-import zadanie2.model.Request;
+import zadanie2.model.exchangerModels.RateData;
+import zadanie2.model.exchangerModels.Request;
 
 public class CachedConnectionTest {
 

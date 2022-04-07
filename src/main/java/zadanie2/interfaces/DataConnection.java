@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.exceptions.dataConnectionExceptions.SavingRateDataException;
-import zadanie2.model.RateData;
-import zadanie2.model.Request;
+import zadanie2.model.exchangerModels.RateData;
+import zadanie2.model.exchangerModels.Request;
 
 public interface DataConnection {
 

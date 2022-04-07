@@ -1,4 +1,4 @@
-package zadanie2.model;
+package zadanie2.model.exchangerModels;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

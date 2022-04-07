@@ -53,21 +53,23 @@ public class CurrencyDao implements Dao<Currency> {
 	}
 
 	@Override
-	public void save(Currency t) throws DaoException {
+	public Currency save(Currency t) throws DaoException {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
 			session.save(t);
 			session.getTransaction().commit();
+			return t;
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+			return null;
 		}
 	}
 
 	@Override
-	public void update(long id, Currency t) throws DaoException {
+	public Currency update(long id, Currency t) throws DaoException {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
@@ -77,25 +79,29 @@ public class CurrencyDao implements Dao<Currency> {
 			query.setParameter("id", id);
 			query.executeUpdate();
 			session.getTransaction().commit();
+			return get(id);
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+			return null;
 		}
 	}
 
 	@Override
-	public void deleteById(long id) throws DaoException {
+	public Currency deleteById(long id) throws DaoException {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
 			Currency currency = get(id);
 			session.delete(currency);
 			session.getTransaction().commit();
+			return currency;
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+			return null;
 		}
 	}
 

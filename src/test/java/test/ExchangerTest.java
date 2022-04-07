@@ -21,8 +21,8 @@ import zadanie2.exceptions.ExchangerException;
 import zadanie2.exceptions.dataConnectionExceptions.ReadingRateDataException;
 import zadanie2.exchanger.Exchanger;
 import zadanie2.interfaces.DataConnection;
-import zadanie2.model.RateData;
-import zadanie2.model.Request;
+import zadanie2.model.exchangerModels.RateData;
+import zadanie2.model.exchangerModels.Request;
 import zadanie2.parsers.apiParsers.ApiJsonParser;
 import zadanie2.parsers.fileParsers.FileJsonParser;
 
