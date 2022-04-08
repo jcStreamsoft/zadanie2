@@ -19,10 +19,8 @@ import zadanie2.model.hibernate.Rate;
 @Repository
 public class CurrencyDao implements Dao<Currency> {
 	protected SessionFactory sessionFactory;
-	private HibernateFactory hibernateFactory;
 
 	public CurrencyDao(HibernateFactory hibernateFactory) {
-		this.hibernateFactory = hibernateFactory;
 		this.sessionFactory = hibernateFactory.getSessionFactory();
 	}
 
@@ -57,7 +55,9 @@ public class CurrencyDao implements Dao<Currency> {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
-			session.save(t);
+			Integer id = (Integer) session.save(t);
+			System.out.println(t.toString());
+			t.setId(id.longValue());
 			session.getTransaction().commit();
 			return t;
 		} catch (Exception e) {
