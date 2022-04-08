@@ -57,5 +57,13 @@ INSERT INTO currency(currency_code) Values('SIT');
 
 INSERT INTO country(country_name) Values('Niemcy');
 INSERT INTO country(country_name) Values('Stany Zjednoczone');
-INSERT INTO Rate(value,date,currency_id) Values('4.4753','2012-01-04',1);
+INSERT INTO country(country_name) Values('Australia');
+INSERT INTO country(country_name) Values('HongKong');
+
+INSERT INTO country_currency(country_id,currency_id) Values(1,1);
+INSERT INTO country_currency(country_id,currency_id) Values(2,2);
+INSERT INTO country_currency(country_id,currency_id) Values(3,3);
+INSERT INTO country_currency(country_id,currency_id) Values(4,53);
+INSERT INTO country_currency(country_id,currency_id) Values(3,2);
+
 

@@ -11,6 +11,7 @@ import zadanie2.model.hibernate.Rate;
 import zadanie2.services.mappers.RateMapper;
 
 @Service
+@Transactional
 public class RateService {
 
 	@Autowired

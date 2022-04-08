@@ -55,12 +55,13 @@ public class CurrencyDao implements Dao<Currency> {
 		Transaction transaction = null;
 		try (Session session = sessionFactory.openSession()) {
 			transaction = session.beginTransaction();
-			Integer id = (Integer) session.save(t);
+			Long id = (Long) session.save(t);
 			System.out.println(t.toString());
-			t.setId(id.longValue());
+			t.setId(id);
 			session.getTransaction().commit();
 			return t;
 		} catch (Exception e) {
+			e.printStackTrace();
 			if (transaction != null) {
 				transaction.rollback();
 			}

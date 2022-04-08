@@ -1,8 +1,8 @@
 package zadanie2.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,16 +26,15 @@ public class CurrencyController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "")
 	@ResponseBody
-	public String saveCurrencyDto(@ModelAttribute(name = "currencyDto") CurrencyDto currencyDto) throws DaoException {
+	public String saveCurrencyDto(@RequestBody CurrencyDto currencyDto) throws DaoException {
 		System.out.println(currencyDto.toString());
 		return currencyService.save(currencyDto).toString();
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/{currencyId}")
 	@ResponseBody
-	public String updateCurrencyDto(@ModelAttribute(name = "currencyDto") CurrencyDto currencyDto,
-			@PathVariable long currencyId) throws DaoException {
-		System.out.println(currencyDto.toString() + " -- " + currencyId);
+	public String updateCurrencyDto(@RequestBody CurrencyDto currencyDto, @PathVariable long currencyId)
+			throws DaoException {
 		return currencyService.update(currencyId, currencyDto).toString();
 	}
 

@@ -11,6 +11,7 @@ import zadanie2.model.hibernate.Currency;
 import zadanie2.services.mappers.CurrencyMapper;
 
 @Service
+@Transactional
 public class CurrencyService {
 	@Autowired
 	private CurrencyDao currencyDao;
