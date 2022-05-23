@@ -24,7 +24,9 @@ public class MainTest {
 		Exchanger.saveRatesFormApiToSql(new ApiConnection(new ApiJsonParser()),
 				new SqlConnection(new HibernateFactory()));
 	}
-
+	public void test() {
+		git 
+	}
 	public static void test2() throws CreatingSessionException, DaoException {
 		HibernateFactory hibernateFactory = new HibernateFactory();
 		RateDao rateDao = new RateDao(hibernateFactory);
